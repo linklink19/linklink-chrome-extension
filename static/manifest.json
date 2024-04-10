@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "LinkLink Extension",
+  "version": "0.1.0",
+  "description": "Extension for LinkLink",
+  "action": {
+    "default_title": "LinkLink",
+    "default_popup": "index.html"
+  },
+  "host_permissions": [
+    "https://link-collections.joscha.io/",
+    "https://link-collections-api.joscha.io/"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  }
+}
