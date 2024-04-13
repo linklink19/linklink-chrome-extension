@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -5,13 +6,10 @@ import type { LiliCreate } from '../models/LiliCreate';
 import type { LiliInfo } from '../models/LiliInfo';
 import type { LiliInput } from '../models/LiliInput';
 import type { LiliOutput } from '../models/LiliOutput';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class LiliService {
-
     /**
      *  Create
      * @param requestBody
@@ -36,7 +34,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Read
      * @param includePrivate
@@ -74,7 +71,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Update
      * @param requestBody
@@ -99,7 +95,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Delete
      * @param requestBody
@@ -124,7 +119,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Read By Id
      * @param id
@@ -150,7 +144,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Get By Id
      * @param id
@@ -176,7 +169,6 @@ export class LiliService {
             },
         });
     }
-
     /**
      *  Read
      * @param includePrivate
@@ -211,5 +203,4 @@ export class LiliService {
             },
         });
     }
-
 }

@@ -9,12 +9,12 @@
   },
   "host_permissions": [
     "https://link-collections.joscha.io/",
-    "https://link-collections-api.joscha.io/"
+    "https://link-collections-api.joscha.io/",
+    "http://localhost:8080/"
   ],
   "permissions": [
     "storage",
-    "tabs",
-    "cookies"
+    "tabs"
   ],
   "background": {
     "service_worker": "service-worker.js"

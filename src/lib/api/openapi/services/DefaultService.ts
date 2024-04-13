@@ -1,14 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { AccountInfo } from '../models/AccountInfo';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class DefaultService {
-
     /**
      * Homepage
      * @returns any Successful Response
@@ -20,7 +18,6 @@ export class DefaultService {
             url: '/',
         });
     }
-
     /**
      * Session
      * @returns any Successful Response
@@ -32,7 +29,6 @@ export class DefaultService {
             url: '/session',
         });
     }
-
     /**
      * User Test
      * @param authToken
@@ -53,5 +49,4 @@ export class DefaultService {
             },
         });
     }
-
 }

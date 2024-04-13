@@ -2,8 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { goto } from '$app/navigation';
-// import { alert_any_error } from '$lib/alerts';
 import { ApiError } from '$lib/api/openapi/core/ApiError';
 import type { ApiRequestOptions } from '$lib/api/openapi/core/ApiRequestOptions';
 import type { ApiResult } from '$lib/api/openapi/core/ApiResult';
@@ -340,14 +338,15 @@ async function handle_api_error(
     try_refresh: boolean = false
 ) {
     if (!(api_error instanceof ApiError)) {
-        // alert_any_error('Unknow Error.');
+        console.log('Unknown error', api_error);
+        // alert_any_error('Unknown Error.');
         throw api_error;
     }
     console.log('handling API error');
     if (api_error.status == 401 && try_refresh) {
         if (options?.url == '/auth/refresh-tokens' || !(config && options)) {
             // logout();
-            throw goto('/error/unauthorized');
+            // throw goto('/error/unauthorized');
         } else {
             // await refresh_tokens();
         }

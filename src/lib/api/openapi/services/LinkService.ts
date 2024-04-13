@@ -1,16 +1,14 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Link } from '../models/Link';
 import type { LinkCreate } from '../models/LinkCreate';
 import type { LiPosition } from '../models/LiPosition';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class LinkService {
-
     /**
      *  Create
      * :return: list of ADDED links
@@ -41,7 +39,6 @@ export class LinkService {
             },
         });
     }
-
     /**
      *  Update
      * @param requestBody
@@ -66,7 +63,6 @@ export class LinkService {
             },
         });
     }
-
     /**
      *  Delete
      * @param requestBody
@@ -91,7 +87,6 @@ export class LinkService {
             },
         });
     }
-
     /**
      *  Set
      * @param liliId
@@ -121,5 +116,4 @@ export class LinkService {
             },
         });
     }
-
 }

@@ -1,15 +1,13 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { AccountInfo } from '../models/AccountInfo';
 import type { AuthProviderResponse } from '../models/AuthProviderResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class AuthService {
-
     /**
      * Get Login Url
      * @returns string Successful Response
@@ -21,7 +19,6 @@ export class AuthService {
             url: '/auth/google/login',
         });
     }
-
     /**
      * Verify Authorization
      * @param requestBody
@@ -41,7 +38,6 @@ export class AuthService {
             },
         });
     }
-
     /**
      * Get Login Url
      * @returns string Successful Response
@@ -53,7 +49,6 @@ export class AuthService {
             url: '/auth/github/login',
         });
     }
-
     /**
      * Verify Authorization
      * @param requestBody
@@ -73,7 +68,6 @@ export class AuthService {
             },
         });
     }
-
     /**
      * Logout
      * @returns any Successful Response
@@ -85,7 +79,26 @@ export class AuthService {
             url: '/auth/logout',
         });
     }
-
+    /**
+     * Check Auth
+     * @param authToken
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static checkAuthAuthCheckAuthGet(
+        authToken?: (string | null),
+    ): CancelablePromise<(AccountInfo | null)> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/auth/check_auth',
+            cookies: {
+                'auth_token': authToken,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
     /**
      * Refresh Tokens
      * Refreshes the access and refresh token cookies.
@@ -107,5 +120,4 @@ export class AuthService {
             },
         });
     }
-
 }

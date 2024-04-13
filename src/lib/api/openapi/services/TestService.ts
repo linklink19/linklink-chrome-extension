@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class TestService {
-
     /**
      * Redirect
      * @returns any Successful Response
@@ -18,7 +17,6 @@ export class TestService {
             url: '/test/redirect',
         });
     }
-
     /**
      * Str Response
      * @returns any Successful Response
@@ -30,7 +28,6 @@ export class TestService {
             url: '/test/str-response',
         });
     }
-
     /**
      * Internal Server Error
      * @returns any Successful Response
@@ -42,7 +39,6 @@ export class TestService {
             url: '/test/internal-server-error',
         });
     }
-
     /**
      * Not Found
      * @returns any Successful Response
@@ -54,5 +50,4 @@ export class TestService {
             url: '/test/not-found',
         });
     }
-
 }

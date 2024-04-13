@@ -1,14 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { LinkAutoFill } from '../models/LinkAutoFill';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class WebService {
-
     /**
      * Get Title
      * @param url
@@ -29,7 +27,6 @@ export class WebService {
             },
         });
     }
-
     /**
      * Get Link Autofill
      * @param url
@@ -50,5 +47,4 @@ export class WebService {
             },
         });
     }
-
 }
