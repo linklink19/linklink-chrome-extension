@@ -120,4 +120,46 @@ export class AuthService {
             },
         });
     }
+    /**
+     * Expire Auth
+     * Dev endpoint to expire the auth token.
+     * @param authToken
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static expireAuthAuthExpireAuthPost(
+        authToken?: (string | null),
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/expire-auth',
+            cookies: {
+                'auth_token': authToken,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Expire All
+     * Dev endpoint to expire all tokens.
+     * @param authToken
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static expireAllAuthExpireAllPost(
+        authToken?: (string | null),
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/expire-all',
+            cookies: {
+                'auth_token': authToken,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
 }

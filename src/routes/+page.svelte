@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AuthService, LiliService, LinkService } from '$lib/api/openapi';
-	import { API_URL } from '$lib/constants';
+	import { WEBSITE_URL } from '$lib/constants';
 	import { account_info_store } from '$lib/stores';
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import { onMount, tick } from 'svelte';
@@ -19,12 +19,13 @@
 	let linklink_name_to_save = '';
 	let input_box: HTMLInputElement;
 
-	let show_saved_single_link = false;
-	let saving_single_link = false;
+	let show_saved = false;
+	let awaiting_single_link_save = false;
+	let awaiting_tabs_save = false;
 	const saved_notification = () => {
-		show_saved_single_link = true;
+		show_saved = true;
 		setTimeout(() => {
-			show_saved_single_link = false;
+			show_saved = false;
 		}, 2000);
 	};
 
@@ -34,7 +35,7 @@
 			let tab = tabs[0];
 			console.log(tab);
 			try {
-				saving_single_link = true;
+				awaiting_single_link_save = true;
 				let saved_link = await LinkService.createLinkPost($account_info_store!.workspace_id, [
 					{
 						order_in_list: 0,
@@ -48,7 +49,7 @@
 			} catch {
 				console.log('error saving link');
 			} finally {
-				saving_single_link = false;
+				awaiting_single_link_save = false;
 			}
 		});
 	};
@@ -65,26 +66,34 @@
 	const actually_save_tabs_to_new_list = async (tabs) => {
 		// tabs have .title and .url
 		console.log(tabs);
-		let lili_out = await LiliService.createLiliPost({
-			name: linklink_name_to_save,
-			links: tabs.map((tab, idx) => {
-				return {
-					order_in_list: idx,
-					name: tab.title,
-					url: tab.url
-				};
-			})
-		});
-		console.log(lili_out.id);
-		if (lili_out !== null) {
-			chrome.tabs.create({ url: `${API_URL}/${lili_out.id}` });
+		awaiting_tabs_save = true;
+		try {
+			let lili_out = await LiliService.createLiliPost({
+				name: linklink_name_to_save,
+				links: tabs.map((tab, idx) => {
+					return {
+						order_in_list: idx,
+						name: tab.title,
+						url: tab.url
+					};
+				})
+			});
+			saved_notification();
+			console.log(lili_out);
+			if (lili_out !== null) {
+				chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili_out.id}` });
+			}
+		} catch {
+			console.log('error saving tabs');
+		} finally {
+			awaiting_tabs_save = false;
 		}
 	};
 
 	const open_workspace = () => {
 		console.log('open workspace');
 		chrome.tabs.create({
-			url: `${API_URL}/lili/${$account_info_store.workspace_id}`
+			url: `${WEBSITE_URL}/lili/${$account_info_store!.workspace_id}`
 		});
 	};
 
@@ -125,59 +134,65 @@
 
 {#if $account_info_store}
 	<div class="flex flex-col gap-2 p-4 min-w-48" class:w-96={saving_tabs}>
-		<!-- This HIDDEN button is only here because otherwise the button has an expansion animation when opening the extension, idk why. -->
-		<button class="btn variant-ghost rounded h-12 hidden w-full">
-			<span> Placeholder</span>
-		</button>
-		{#if show_saved_single_link}
-			<button class="btn variant-ghost-primary rounded h-12 w-full" on:click={open_workspace}>
+		{#if show_saved}
+			<button class="btn variant-ghost-primary rounded h-36 w-full" on:click={open_workspace}>
 				<i class="fas fa-check w-8 p-1"></i>
 				<span> Saved</span>
 			</button>
 		{:else}
+			<!-- This HIDDEN button is only here because otherwise the button has an expansion animation when opening the extension, idk why. -->
+			<button class="btn variant-ghost rounded h-12 hidden w-full">
+				<span> Placeholder</span>
+			</button>
 			<button
 				class="btn variant-ghost rounded h-12 w-full"
 				on:click={save_current_link}
-				disabled={saving_single_link}
+				disabled={awaiting_single_link_save}
 			>
 				<i class="fas fa-bookmark w-8 p-1"></i>
 				<span> Save URL</span>
 			</button>
-		{/if}
-		{#if saving_tabs}
-			<div class="flex gap-2 items-center">
-				<input
-					type="text"
-					class="input w-full"
-					placeholder="LinkLink Name"
-					bind:value={linklink_name}
-					bind:this={input_box}
-					on:focus={() => {
-						input_box.select();
+			{#if saving_tabs}
+				<div class="flex gap-2 items-center">
+					<input
+						type="text"
+						class="input w-full"
+						placeholder="LinkLink Name"
+						bind:value={linklink_name}
+						bind:this={input_box}
+						on:focus={() => {
+							input_box.select();
+						}}
+						disabled={awaiting_tabs_save}
+						on:keydown={(e) => {
+							if (e.key === 'Enter') {
+								save_all_tabs();
+							}
+						}}
+					/>
+					<button class="btn variant-ghost rounded h-12 w-12" disabled={awaiting_tabs_save}>
+						<i class="fas fa-save w-8 p-1"></i>
+					</button>
+				</div>
+			{:else}
+				<button
+					class="btn variant-ghost rounded h-12 w-full"
+					on:click={async () => {
+						saving_tabs = true;
+						await tick();
+						input_box.focus();
 					}}
-				/>
-				<button class="btn variant-ghost rounded h-12 w-12" on:click={save_all_tabs}>
+				>
 					<i class="fas fa-save w-8 p-1"></i>
+					<span> Save All Tabs</span>
 				</button>
-			</div>
-		{:else}
-			<button
-				class="btn variant-ghost rounded h-12 w-full"
-				on:click={async () => {
-					saving_tabs = true;
-					await tick();
-					input_box.focus();
-				}}
-			>
-				<i class="fas fa-save w-8 p-1"></i>
-				<span> Save All Tabs</span>
+			{/if}
+
+			<button class="btn variant-ghost rounded h-12 w-full" on:click={open_workspace}>
+				<i class="fas fa-share w-8 p-1"></i>
+				<span> Workspace</span>
 			</button>
 		{/if}
-
-		<button class="btn variant-ghost rounded h-12 w-full" on:click={open_workspace}>
-			<i class="fas fa-share w-8 p-1"></i>
-			<span> Workspace</span>
-		</button>
 		<div class="flex items-center justify-start gap-2">
 			{#if $account_info_store.profile_picture_url}
 				<Avatar
@@ -187,7 +202,7 @@
 					border="border-4 border-surface-300-600-token hover:!border-primary-500"
 					cursor="cursor-pointer"
 					on:click={() => {
-						chrome.tabs.create({ url: `${API_URL}/profile` });
+						chrome.tabs.create({ url: `${WEBSITE_URL}/profile` });
 					}}
 				/>
 			{/if}
@@ -199,7 +214,7 @@
 		<button
 			class="btn variant-ghost rounded hover:underline h-12 w-32"
 			on:click={() => {
-				chrome.tabs.create({ url: `${API_URL}/login` });
+				chrome.tabs.create({ url: `${WEBSITE_URL}/login` });
 			}}
 		>
 			<i class="fas fa-sign-in-alt w-8"></i>

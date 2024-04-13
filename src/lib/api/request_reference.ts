@@ -8,7 +8,9 @@ import type { ApiResult } from '$lib/api/openapi/core/ApiResult';
 import { CancelablePromise } from '$lib/api/openapi/core/CancelablePromise';
 import type { OnCancel } from '$lib/api/openapi/core/CancelablePromise';
 import type { OpenAPIConfig } from '$lib/api/openapi/core/OpenAPI';
+import { account_info_store } from '$lib/stores';
 import { error } from '@sveltejs/kit';
+import { AuthService } from '$lib/api/openapi/services/AuthService';
 // import { logout, refresh_tokens } from '$lib/api/auth';
 
 const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
@@ -345,15 +347,11 @@ async function handle_api_error(
     console.log('handling API error');
     if (api_error.status == 401 && try_refresh) {
         if (options?.url == '/auth/refresh-tokens' || !(config && options)) {
-            // logout();
-            // throw goto('/error/unauthorized');
+            account_info_store.set(null);
         } else {
-            // await refresh_tokens();
+            await AuthService.refreshTokensAuthRefreshTokensPost();
         }
     } else {
-        if (alert_enabled) {
-            // alert_any_error(api_error.message);
-        }
         if (throw_error) {
             throw error(api_error.status, api_error);
         }
