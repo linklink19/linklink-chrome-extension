@@ -352,9 +352,6 @@ async function handle_api_error(
             await AuthService.refreshTokensAuthRefreshTokensPost();
         }
     } else {
-        if (alert_enabled) {
-            // alert_any_error(api_error.message);
-        }
         if (throw_error) {
             throw error(api_error.status, api_error);
         }

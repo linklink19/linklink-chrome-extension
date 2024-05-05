@@ -1,6 +1,6 @@
 <script lang="ts">
     import { LinkService } from '$lib/api/openapi';
-    import { account_info_store } from '$lib/stores';
+    import { account_info_store, client_settings } from '$lib/stores';
 
     let show_saved = false;
     let awaiting_single_link_save = false;
@@ -19,7 +19,7 @@
             try {
                 awaiting_single_link_save = true;
                 let saved_link = await LinkService.createLinkPost(
-                    $account_info_store!.workspace_id,
+                    $client_settings.target_lili?.id ?? $account_info_store!.workspace_id,
                     [
                         {
                             order_in_list: 0,

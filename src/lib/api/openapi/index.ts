@@ -18,8 +18,10 @@ export type { Link } from './models/Link';
 export type { LinkAutoFill } from './models/LinkAutoFill';
 export type { LinkCreate } from './models/LinkCreate';
 export type { LiPosition } from './models/LiPosition';
+export type { NameRecord } from './models/NameRecord';
 export type { ValidationError } from './models/ValidationError';
 
+export { AccessHistoryService } from './services/AccessHistoryService';
 export { AccountService } from './services/AccountService';
 export { AuthService } from './services/AuthService';
 export { DefaultService } from './services/DefaultService';

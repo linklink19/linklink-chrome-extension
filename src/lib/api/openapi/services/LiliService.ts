@@ -41,6 +41,7 @@ export class LiliService {
      * @param starredOnly
      * @param limit
      * @param offset
+     * @param includeUserPublic
      * @param authToken
      * @returns LiliOutput Successful Response
      * @throws ApiError
@@ -51,6 +52,7 @@ export class LiliService {
         starredOnly: boolean = false,
         limit: number = 9,
         offset?: number,
+        includeUserPublic: boolean = true,
         authToken?: (string | null),
     ): CancelablePromise<Array<LiliOutput>> {
         return __request(OpenAPI, {
@@ -65,6 +67,7 @@ export class LiliService {
                 'starred_only': starredOnly,
                 'limit': limit,
                 'offset': offset,
+                'include_user_public': includeUserPublic,
             },
             errors: {
                 422: `Validation Error`,
@@ -75,13 +78,13 @@ export class LiliService {
      *  Update
      * @param requestBody
      * @param authToken
-     * @returns any Successful Response
+     * @returns LiliOutput Successful Response
      * @throws ApiError
      */
     public static updateLiliPut(
         requestBody: LiliInput,
         authToken?: (string | null),
-    ): CancelablePromise<any> {
+    ): CancelablePromise<LiliOutput> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/lili/',

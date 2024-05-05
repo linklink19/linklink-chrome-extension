@@ -101,19 +101,22 @@ export class AuthService {
     }
     /**
      * Refresh Tokens
-     * Refreshes the access and refresh token cookies.
+     * Refreshes the access and refresh token cookies, if it's a good idea.
      * @param refreshToken
+     * @param authToken
      * @returns any Successful Response
      * @throws ApiError
      */
     public static refreshTokensAuthRefreshTokensPost(
         refreshToken?: (string | null),
+        authToken?: (string | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/refresh-tokens',
             cookies: {
                 'refresh_token': refreshToken,
+                'auth_token': authToken,
             },
             errors: {
                 422: `Validation Error`,

@@ -45,7 +45,10 @@
 </script>
 
 {#if $account_info_store}
-    <div class="flex flex-col gap-2 p-4 min-w-48" class:w-96={$client_status.saving_all_tabs}>
+    <div
+        class="flex flex-col gap-2 p-4 min-w-96"
+        class:w-96={$client_status.saving_all_tabs || $client_status.show_list_selection}
+    >
         <!-- class:w-96={saving_tabs} -->
         <!-- IGNORE START -->
         <!-- This HIDDEN button is only here because otherwise the button has an expansion animation when opening the extension, idk why. -->

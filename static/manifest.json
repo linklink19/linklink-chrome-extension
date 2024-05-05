@@ -9,8 +9,10 @@
     "default_icon": "favicon.png"
   },
   "host_permissions": [
-    "https://api.linklink.ink/",
-    "https://dev-api.linklink.ink/"
+    "http://localhost:8000/",
+    "http://localhost:8080/"
+    // "https://api.linklink.ink/",
+    // "https://dev-api.linklink.ink/"
   ],
   "permissions": [
     "storage",

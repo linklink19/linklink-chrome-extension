@@ -2,32 +2,29 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LiliOutput } from '../models/LiliOutput';
-import type { NameRecord } from '../models/NameRecord';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class SearchService {
+export class AccessHistoryService {
     /**
-     *  Search
-     * :return: list of lilis
-     * @param searchTerm
+     *  Post
+     * @param liliId
      * @param authToken
-     * @returns LiliOutput Successful Response
+     * @returns any Successful Response
      * @throws ApiError
      */
-    public static searchSearchGet(
-        searchTerm: string = '',
+    public static postAccessHistoryLiliLiliIdPost(
+        liliId: string,
         authToken?: (string | null),
-    ): CancelablePromise<Array<LiliOutput>> {
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
-            method: 'GET',
-            url: '/search/',
+            method: 'POST',
+            url: '/access-history/lili/{lili_id}',
+            path: {
+                'lili_id': liliId,
+            },
             cookies: {
                 'auth_token': authToken,
-            },
-            query: {
-                'search_term': searchTerm,
             },
             errors: {
                 422: `Validation Error`,
@@ -35,25 +32,19 @@ export class SearchService {
         });
     }
     /**
-     *  Search
-     * Used for extension.
-     * @param searchTerm
+     *  Read Access History
      * @param authToken
-     * @returns NameRecord Successful Response
+     * @returns string Successful Response
      * @throws ApiError
      */
-    public static searchSearchOwnLiliNamesGet(
-        searchTerm: string = '',
+    public static readAccessHistoryAccessHistoryLiliGet(
         authToken?: (string | null),
-    ): CancelablePromise<Array<NameRecord>> {
+    ): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/search/own-lili-names',
+            url: '/access-history/lili',
             cookies: {
                 'auth_token': authToken,
-            },
-            query: {
-                'search_term': searchTerm,
             },
             errors: {
                 422: `Validation Error`,
