@@ -9,13 +9,13 @@
     "default_icon": "favicon.png"
   },
   "host_permissions": [
-    "https://link-collections.joscha.io/",
-    "https://link-collections-api.joscha.io/",
-    "http://localhost:8080/"
+    "https://api.linklink.ink/",
+    "https://dev-api.linklink.ink/"
   ],
   "permissions": [
     "storage",
     "tabs"
+    // "cookies"
   ],
   "background": {
     "service_worker": "service-worker.js"
