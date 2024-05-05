@@ -1,52 +1,14 @@
 <script lang="ts">
-    import { AuthService, LiliService, LinkService } from '$lib/api/openapi';
+    import { LiliService } from '$lib/api/openapi';
     import { WEBSITE_URL } from '$lib/constants';
-    import { account_info_store } from '$lib/stores';
-    import { Avatar } from '@skeletonlabs/skeleton';
-    import { onMount, tick } from 'svelte';
+    import { client_status } from '$lib/stores';
+    import { tick } from 'svelte';
 
-    let saving_tabs = false;
     let linklink_name = 'My New LinkLink';
     let linklink_name_to_save = '';
     let input_box: HTMLInputElement;
 
-    let show_saved = false;
-    let awaiting_single_link_save = false;
     let awaiting_tabs_save = false;
-    const saved_notification = () => {
-        show_saved = true;
-        setTimeout(() => {
-            show_saved = false;
-        }, 2000);
-    };
-
-    const save_current_link = () => {
-        console.log('current link');
-        chrome.tabs.query({ active: true, lastFocusedWindow: true }, async (tabs) => {
-            let tab = tabs[0];
-            console.log(tab);
-            try {
-                awaiting_single_link_save = true;
-                let saved_link = await LinkService.createLinkPost(
-                    $account_info_store!.workspace_id,
-                    [
-                        {
-                            order_in_list: 0,
-                            name: tab.title!,
-                            url: tab.url!
-                        }
-                    ]
-                );
-                if (saved_link !== null) {
-                    saved_notification();
-                }
-            } catch {
-                console.log('error saving link');
-            } finally {
-                awaiting_single_link_save = false;
-            }
-        });
-    };
 
     const save_all_tabs = () => {
         console.log('all tabs');
@@ -54,7 +16,7 @@
         chrome.tabs.query({ currentWindow: true }, actually_save_tabs_to_new_list);
         // reset
         linklink_name = 'My New LinkLink';
-        saving_tabs = false;
+        $client_status.saving_all_tabs = false;
     };
 
     const actually_save_tabs_to_new_list = async (tabs) => {
@@ -72,7 +34,8 @@
                     };
                 })
             });
-            saved_notification();
+            // saved_notification();
+            // TODO: save notification (???)
             console.log(lili_out);
             if (lili_out !== null) {
                 chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili_out.id}` });
@@ -85,7 +48,7 @@
     };
 </script>
 
-{#if saving_tabs}
+{#if $client_status.saving_all_tabs}
     <div class="flex gap-2 items-center">
         <input
             type="text"
@@ -115,7 +78,7 @@
     <button
         class="btn variant-ghost rounded h-12 w-full"
         on:click={async () => {
-            saving_tabs = true;
+            $client_status.saving_all_tabs = true;
             await tick();
             input_box.focus();
         }}

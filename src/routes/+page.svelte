@@ -1,23 +1,13 @@
 <script lang="ts">
-    import ListSelectorComponent from '../lib/components/ListSelectorComponent.svelte';
-
-    import LoginComponent from '../lib/components/LoginComponent.svelte';
-
+    import ListSelectorComponent from '$lib/components/ListSelectorComponent.svelte';
+    import LoginComponent from '$lib/components/LoginComponent.svelte';
     import ProfileComponent from '$lib/components/ProfileComponent.svelte';
     import SaveTabs from '$lib/components/SaveTabs.svelte';
     import SaveLink from '$lib/components/SaveLink.svelte';
 
     import { AuthService } from '$lib/api/openapi';
-    import { WEBSITE_URL } from '$lib/constants';
-    import { account_info_store } from '$lib/stores';
+    import { account_info_store, client_status } from '$lib/stores';
     import { onMount } from 'svelte';
-
-    const open_workspace = () => {
-        console.log('open workspace');
-        chrome.tabs.create({
-            url: `${WEBSITE_URL}/lili/${$account_info_store!.workspace_id}`
-        });
-    };
 
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
@@ -46,10 +36,6 @@
         }
     };
 
-    const goto_login = () => {
-        chrome.tabs.create({ url: `${WEBSITE_URL}/login` });
-    };
-
     onMount(async () => {
         // just check/refresh every time you open the thing. maybe not the best idea
         // but for now it's ok, no custom re-login if unauthorized bs.
@@ -59,7 +45,7 @@
 </script>
 
 {#if $account_info_store}
-    <div class="flex flex-col gap-2 p-4 min-w-48">
+    <div class="flex flex-col gap-2 p-4 min-w-48" class:w-96={$client_status.saving_all_tabs}>
         <!-- class:w-96={saving_tabs} -->
         <!-- IGNORE START -->
         <!-- This HIDDEN button is only here because otherwise the button has an expansion animation when opening the extension, idk why. -->
