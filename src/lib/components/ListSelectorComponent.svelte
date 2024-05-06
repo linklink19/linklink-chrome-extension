@@ -45,7 +45,7 @@
 <div class="flex flex-col">
     <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-center items-center">
         <a
-            class="h-full w-full flex grow items-center align-middle
+            class="h-full w-full flex grow items-center align-middle hover:bg-white hover:bg-opacity-5
             border-r-[1px] border-gray-500"
             href={target_url}
             target="_blank"
@@ -56,7 +56,7 @@
             </span>
         </a>
         <button
-            class="btn flex justify-center items-center h-full p-0 m-2"
+            class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
             on:click={toggle_list_selection}
         >
             <div class="flex justify-center items-center">
@@ -96,6 +96,7 @@
                             $client_settings.target_lili?.id}
                         on:click={() => {
                             select_list(name_record);
+                            toggle_list_selection();
                         }}
                     >
                         {name_record.name}

@@ -52,6 +52,11 @@
         <span> Saved!</span>
     {:else}
         <i class="fas fa-bookmark w-8 p-1"></i>
-        <span> Save URL</span>
+        <span>
+            Save
+            {$client_settings.target_lili?.name
+                ? `to \`${$client_settings.target_lili.name}\``
+                : 'URL'}
+        </span>
     {/if}
 </button>
