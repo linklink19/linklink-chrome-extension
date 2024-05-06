@@ -9,15 +9,14 @@
     "default_icon": "favicon.png"
   },
   "host_permissions": [
-    "http://localhost:8000/",
-    "http://localhost:8080/"
-    // "https://api.linklink.ink/",
+    // "http://localhost:8000/",
+    // "http://localhost:8080/"
     // "https://dev-api.linklink.ink/"
+    "https://api.linklink.ink/"
   ],
   "permissions": [
     "storage",
     "tabs"
-    // "cookies"
   ],
   "background": {
     "service_worker": "service-worker.js"
