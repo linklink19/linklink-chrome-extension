@@ -17,9 +17,9 @@
         }
     };
 
-    function debounce(func, timeout = 120) {
-        let timer;
-        return (...args) => {
+    function debounce(func: Function, timeout = 120) {
+        let timer: NodeJS.Timeout;
+        return (...args: any[]) => {
             clearTimeout(timer);
             timer = setTimeout(() => {
                 func.apply(this, args);
@@ -43,21 +43,33 @@
 </script>
 
 <div class="flex flex-col">
-    <div class="flex flex-grow variant-ghost rounded h-12 w-full items-center align-middle">
+    <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-center items-center">
         <a
-            class="h-full w-full grow border-r-[1px] border-gray-500 mr-4 flex items-center align-middle"
+            class="h-full w-full flex grow items-center align-middle
+            border-r-[1px] border-gray-500"
             href={target_url}
             target="_blank"
         >
-            <i class="fas fa-share w-8 p-1 px-4"></i>
-            <span>
+            <i class="fas fa-up-right-from-square w-8 p-1 px-4"></i>
+            <span class="pl-2">
                 {$client_settings.target_lili?.name ?? 'Workspace'}
             </span>
         </a>
-        <button class="flex align-middle items-center h-full" on:click={toggle_list_selection}>
-            <i class="fas fa-ellipsis-v h-full w-8"></i>
+        <button
+            class="btn flex justify-center items-center h-full p-0 m-2"
+            on:click={toggle_list_selection}
+        >
+            <div class="flex justify-center items-center">
+                <i
+                    class="fas h-full w-8"
+                    class:fa-caret-down={!$client_status.show_list_selection}
+                    class:fa-caret-up={$client_status.show_list_selection}
+                >
+                </i>
+            </div>
         </button>
     </div>
+    <!-- List Selection -->
     {#if $client_status.show_list_selection}
         <div
             class="flex flex-col gap-2 py-2"
