@@ -1,6 +1,6 @@
-Use `pnpm devext` to run dev extension live.
+# linklink.ink Chrome Extension
 
-Otherwise build the thing etc. Go to chrome and do `Load unpacked`...
+Build the thing `pnpm build`, go to chrome extensions in your browser, `Load unpacked` -> direct to `build` directory.
 
-
-IF pointing to local deployment remember to remove and re-add the extension otherwise it won't take manifest.json changes. (change manifest.json & constants.ts)
+For live dev work, use `pnpm devext` to run dev extension live. 
+For changes to manifest.json re-adding the extension is needed.
