@@ -4,16 +4,16 @@
     import { slide } from 'svelte/transition';
     import { quintOut } from 'svelte/easing';
     import { SearchService, type NameRecord } from '$lib/api/openapi';
+    import { tick } from 'svelte';
     $: target_url = `${WEBSITE_URL}/lili/${$client_settings.target_lili?.id ?? $account_info_store!.workspace_id}`;
 
     let search_field: HTMLInputElement;
-    const toggle_list_selection = () => {
+    const toggle_list_selection = async () => {
         $client_status.show_list_selection = !$client_status.show_list_selection;
         if ($client_status.show_list_selection) {
-            update_search_results();
-            setTimeout(() => {
-                search_field.focus();
-            }, 100);
+            await update_search_results();
+            await tick();
+            search_field.focus();
         }
     };
 
@@ -103,7 +103,6 @@
                         class:variant-ringed-success={name_record.id === $client_settings.target_lili?.id}
                         on:click={() => {
                             select_list(name_record);
-                            toggle_list_selection();
                         }}
                     >
                         {name_record.name}
