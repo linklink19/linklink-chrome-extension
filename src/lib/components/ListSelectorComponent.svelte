@@ -53,16 +53,16 @@
 </script>
 
 <div class="flex flex-col">
-    <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-between items-center">
+    <div class="flex h-12 w-full flex-grow items-center justify-between rounded variant-ghost">
 
         <button
             class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5
             border-r-[1px] border-gray-500"
             on:click={() => {$client_settings.show_current_list = !$client_settings.show_current_list;}}
         >
-            <span class="flex justify-center items-center">
+            <span class="flex items-center justify-center">
                 <i
-                    class="fas h-full w-8"
+                    class="h-full w-8 fas"
                     class:fa-eye={$client_settings.show_current_list}
                     class:fa-eye-slash={!$client_settings.show_current_list}
                 />
@@ -77,15 +77,15 @@
             <span class="pl-2">
                 {$client_settings.target_lili?.name ?? 'Workspace'}
             </span>
-            <i class="fas fa-up-right-from-square w-8 p-1 px-4"></i>
+            <i class="w-8 p-1 px-4 fas fa-up-right-from-square"></i>
         </a>
         <button
-            class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
+            class="flex h-full items-center justify-center p-2 btn hover:bg-white hover:bg-opacity-5"
             on:click={toggle_list_selection}
         >
-            <span class="flex justify-center items-center">
+            <span class="flex items-center justify-center">
                 <i
-                    class="fas h-full w-8"
+                    class="h-full w-8 fas"
                     class:fa-caret-down={!$client_status.show_list_selection}
                     class:fa-caret-up={$client_status.show_list_selection}
                 />
@@ -100,7 +100,7 @@
         >
             <input
                 type="text"
-                class="h-12 w-full input rounded"
+                class="h-12 w-full rounded input"
                 placeholder="Search"
                 bind:value={search_string}
                 bind:this={search_field}
@@ -109,7 +109,7 @@
             <div class="flex flex-col gap-2">
                 {#each search_results as name_record}
                     <button
-                        class="btn flex flex-col h-12 align-middle justify-center p-2 rounded text-wrap"
+                        class="flex h-12 flex-col justify-center rounded p-2 align-middle btn text-wrap"
                         class:variant-glass-surface={name_record.id !== $client_settings.target_lili?.id}
                         class:variant-ringed-success={name_record.id === $client_settings.target_lili?.id}
                         on:click={() => {
@@ -123,10 +123,12 @@
         </div>
     {/if}
     {#if $client_settings.show_current_list && !$client_status.show_list_selection}
+        <div class="flex flex-col gap-2" transition:slide={{ duration: 100, easing: quintOut, axis: 'y' }}>
         {#if $current_lili !== null}
             {#each $current_lili.links as link}
                 <LinkComponent {link} />
             {/each}
         {/if}
+        </div>
     {/if}
 </div>
