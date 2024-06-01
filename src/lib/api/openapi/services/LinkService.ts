@@ -18,7 +18,7 @@ export class LinkService {
      * @returns Link Successful Response
      * @throws ApiError
      */
-    public static createLinkPost(
+    public static linkPost(
         liliId: string,
         requestBody: Array<LinkCreate>,
         authToken?: (string | null),
@@ -46,7 +46,7 @@ export class LinkService {
      * @returns Link Successful Response
      * @throws ApiError
      */
-    public static updateLinkPut(
+    public static linkPut(
         requestBody: Link,
         authToken?: (string | null),
     ): CancelablePromise<Link> {
@@ -70,7 +70,7 @@ export class LinkService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static deleteLinkDelete(
+    public static linkDelete(
         requestBody: Array<string>,
         authToken?: (string | null),
     ): CancelablePromise<Array<string>> {
@@ -95,7 +95,7 @@ export class LinkService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static setLinkOrderPatch(
+    public static linkOrderPatch(
         liliId: string,
         requestBody: Array<LiPosition>,
         authToken?: (string | null),

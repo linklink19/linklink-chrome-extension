@@ -13,7 +13,7 @@ export class AccessHistoryService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static postAccessHistoryLiliLiliIdPost(
+    public static accessHistoryLiliLiliIdPost(
         liliId: string,
         authToken?: (string | null),
     ): CancelablePromise<any> {
@@ -37,7 +37,7 @@ export class AccessHistoryService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static readAccessHistoryAccessHistoryLiliGet(
+    public static accessHistoryLiliGet(
         authToken?: (string | null),
     ): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {

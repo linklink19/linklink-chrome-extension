@@ -326,7 +326,7 @@ export const request = <T>(config: OpenAPIConfig, options: ApiRequestOptions): C
                 }
             }
         } catch (api_error) {
-            handle_api_error(api_error, config, options);
+            await handle_api_error(api_error, config, options);
         }
     });
 };
@@ -349,7 +349,7 @@ async function handle_api_error(
         if (options?.url == '/auth/refresh-tokens' || !(config && options)) {
             account_info_store.set(null);
         } else {
-            await AuthService.refreshTokensAuthRefreshTokensPost();
+            await AuthService.authRefreshTokensPost();
         }
     } else {
         if (throw_error) {

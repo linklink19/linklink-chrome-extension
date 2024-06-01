@@ -16,10 +16,12 @@ export const auth_status: Writable<AuthStatus> = writable(AuthStatus.unknown);
 export type ClientStatus = {
     saving_all_tabs: boolean;
     show_list_selection: boolean;
+    show_current_list: boolean;
 };
 const defaultClientStatus: ClientStatus = {
     saving_all_tabs: false,
     show_list_selection: false,
+    show_current_list: false,
 };
 export const client_status: Writable<ClientStatus> = writable(defaultClientStatus);
 

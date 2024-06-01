@@ -14,7 +14,7 @@ export class AccountService {
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static readAccountDetailsGet(
+    public static accountDetailsGet(
         authToken?: (string | null),
     ): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
@@ -36,7 +36,7 @@ export class AccountService {
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static updateAccountChangeDetailsPost(
+    public static accountChangeDetailsPost(
         requestBody: AccountInfo,
         authToken?: (string | null),
     ): CancelablePromise<AccountInfo> {
@@ -60,7 +60,7 @@ export class AccountService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static deleteAccountDeleteDelete(
+    public static accountDeleteDelete(
         authToken?: (string | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

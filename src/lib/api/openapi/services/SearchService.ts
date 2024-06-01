@@ -16,7 +16,7 @@ export class SearchService {
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static searchSearchGet(
+    public static searchGet(
         searchTerm: string = '',
         authToken?: (string | null),
     ): CancelablePromise<Array<LiliOutput>> {
@@ -42,7 +42,7 @@ export class SearchService {
      * @returns NameRecord Successful Response
      * @throws ApiError
      */
-    public static searchSearchOwnLiliNamesGet(
+    public static searchOwnLiliNamesGet(
         searchTerm: string = '',
         authToken?: (string | null),
     ): CancelablePromise<Array<NameRecord>> {

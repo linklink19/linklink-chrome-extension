@@ -2,7 +2,6 @@
     import ListSelectorComponent from '$lib/components/ListSelectorComponent.svelte';
     import LoginComponent from '$lib/components/LoginComponent.svelte';
     import ProfileComponent from '$lib/components/ProfileComponent.svelte';
-    import SaveTabs from '$lib/components/SaveTabs.svelte';
     import SaveLink from '$lib/components/SaveLink.svelte';
 
     import { AuthService } from '$lib/api/openapi';
@@ -12,16 +11,16 @@
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
         try {
-            let account_info = await AuthService.checkAuthAuthCheckAuthGet();
+            let account_info = await AuthService.authCheckAuthGet();
             if (account_info) {
                 console.log('logged in');
                 $account_info_store = account_info;
             } else {
                 console.log('not logged in');
                 try {
-                    await AuthService.refreshTokensAuthRefreshTokensPost();
+                    await AuthService.authRefreshTokensPost();
                 } catch {}
-                let account_info = await AuthService.checkAuthAuthCheckAuthGet();
+                let account_info = await AuthService.authCheckAuthGet();
                 if (account_info) {
                     console.log('logged in after refresh');
                     $account_info_store = account_info;
@@ -40,7 +39,7 @@
         // just check/refresh every time you open the thing. maybe not the best idea
         // but for now it's ok, no custom re-login if unauthorized bs.
         // this would only break client side if someone leaves the extension open for >15 mins
-        check_login();
+        await check_login();
     });
 </script>
 
@@ -58,7 +57,6 @@
         <!-- IGNORE END -->
 
         <SaveLink />
-        <SaveTabs />
         <ListSelectorComponent />
         <ProfileComponent />
     </div>

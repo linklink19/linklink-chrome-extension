@@ -11,7 +11,7 @@ export class TestService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static redirectTestRedirectGet(): CancelablePromise<any> {
+    public static testRedirectGet(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/redirect',
@@ -22,7 +22,7 @@ export class TestService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static strResponseTestStrResponseGet(): CancelablePromise<any> {
+    public static testStrResponseGet(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/str-response',
@@ -33,7 +33,7 @@ export class TestService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static internalServerErrorTestInternalServerErrorGet(): CancelablePromise<any> {
+    public static testInternalServerErrorGet(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/internal-server-error',
@@ -44,7 +44,7 @@ export class TestService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static notFoundTestNotFoundGet(): CancelablePromise<any> {
+    public static testNotFoundGet(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/not-found',

@@ -13,7 +13,7 @@ export class AuthService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static getLoginUrlAuthGoogleLoginGet(): CancelablePromise<string> {
+    public static authGoogleLoginGet(): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/auth/google/login',
@@ -25,7 +25,7 @@ export class AuthService {
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static verifyAuthorizationAuthGoogleAuthPost(
+    public static authGoogleAuthPost(
         requestBody: AuthProviderResponse,
     ): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
@@ -43,7 +43,7 @@ export class AuthService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static getLoginUrlAuthGithubLoginGet(): CancelablePromise<string> {
+    public static authGithubLoginGet(): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/auth/github/login',
@@ -55,7 +55,7 @@ export class AuthService {
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static verifyAuthorizationAuthGithubAuthPost(
+    public static authGithubAuthPost(
         requestBody: AuthProviderResponse,
     ): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
@@ -73,7 +73,7 @@ export class AuthService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static logoutAuthLogoutPost(): CancelablePromise<any> {
+    public static authLogoutPost(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/logout',
@@ -85,7 +85,7 @@ export class AuthService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static checkAuthAuthCheckAuthGet(
+    public static authCheckAuthGet(
         authToken?: (string | null),
     ): CancelablePromise<(AccountInfo | null)> {
         return __request(OpenAPI, {
@@ -107,7 +107,7 @@ export class AuthService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static refreshTokensAuthRefreshTokensPost(
+    public static authRefreshTokensPost(
         refreshToken?: (string | null),
         authToken?: (string | null),
     ): CancelablePromise<any> {
@@ -130,7 +130,7 @@ export class AuthService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static expireAuthAuthExpireAuthPost(
+    public static authExpireAuthPost(
         authToken?: (string | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -151,7 +151,7 @@ export class AuthService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static expireAllAuthExpireAllPost(
+    public static authExpireAllPost(
         authToken?: (string | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

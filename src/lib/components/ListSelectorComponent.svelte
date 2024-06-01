@@ -31,7 +31,7 @@
     let search_results: NameRecord[] = [];
 
     const update_search_results = async () => {
-        await SearchService.searchSearchOwnLiliNamesGet(search_string).then((res) => {
+        await SearchService.searchOwnLiliNamesGet(search_string).then((res) => {
             search_results = res;
         });
     };
@@ -43,57 +43,64 @@
 </script>
 
 <div class="flex flex-col">
-    <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-center items-center">
+    <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-between items-center">
+
+        <button
+            class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
+            on:click={() => {$client_status.show_current_list = !$client_status.show_current_list;}}
+        >
+            <span class="flex justify-center items-center">
+                <i
+                    class="fas h-full w-8"
+                    class:fa-eye={$client_status.show_current_list}
+                    class:fa-eye-slash={!$client_status.show_current_list}
+                />
+            </span>
+        </button>
         <a
-            class="h-full w-full flex grow items-center align-middle hover:bg-white hover:bg-opacity-5
+            class="h-full w-full flex grow items-center align-middle justify-center hover:bg-white hover:bg-opacity-5
             border-r-[1px] border-gray-500"
             href={target_url}
             target="_blank"
         >
-            <i class="fas fa-up-right-from-square w-8 p-1 px-4"></i>
             <span class="pl-2">
                 {$client_settings.target_lili?.name ?? 'Workspace'}
             </span>
+            <i class="fas fa-up-right-from-square w-8 p-1 px-4"></i>
         </a>
         <button
             class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
             on:click={toggle_list_selection}
         >
-            <div class="flex justify-center items-center">
+            <span class="flex justify-center items-center">
                 <i
                     class="fas h-full w-8"
                     class:fa-caret-down={!$client_status.show_list_selection}
                     class:fa-caret-up={$client_status.show_list_selection}
-                >
-                </i>
-            </div>
+                />
+            </span>
         </button>
     </div>
-    <!-- List Selection -->
-    {#if $client_status.show_list_selection}
+    <!-- List Selection Selection -->
+    {#if $client_status.show_list_selection && search_results.length > 0}
         <div
             class="flex flex-col gap-2 py-2"
-            transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}
+            transition:slide={{ duration: 100, easing: quintOut, axis: 'y' }}
         >
             <input
                 type="text"
                 class="h-12 w-full input rounded"
-                placeholder="List Search..."
+                placeholder="Search"
                 bind:value={search_string}
                 bind:this={search_field}
                 on:keydown={process_change}
             />
-            <div
-                class="flex flex-col gap-2"
-                transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}
-            >
+            <div class="flex flex-col gap-2">
                 {#each search_results as name_record}
                     <button
                         class="btn flex flex-col h-12 align-middle justify-center p-2 rounded text-wrap"
-                        class:variant-glass-surface={name_record.id !==
-                            $client_settings.target_lili?.id}
-                        class:variant-glass-success={name_record.id ===
-                            $client_settings.target_lili?.id}
+                        class:variant-glass-surface={name_record.id !== $client_settings.target_lili?.id}
+                        class:variant-ringed-success={name_record.id === $client_settings.target_lili?.id}
                         on:click={() => {
                             select_list(name_record);
                             toggle_list_selection();
@@ -104,5 +111,8 @@
                 {/each}
             </div>
         </div>
+    {/if}
+    {#if $client_status.show_current_list && !$client_status.show_list_selection}
+        the current list here
     {/if}
 </div>

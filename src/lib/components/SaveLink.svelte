@@ -18,7 +18,7 @@
             console.log(tab);
             try {
                 awaiting_single_link_save = true;
-                let saved_link = await LinkService.createLinkPost(
+                let saved_link = await LinkService.linkPost(
                     $client_settings.target_lili?.id ?? $account_info_store!.workspace_id,
                     [
                         {
@@ -51,11 +51,11 @@
         <i class="fas fa-check-circle w-8 p-1"></i>
         <span> Saved!</span>
     {:else}
-        <i class="fas fa-bookmark w-8 p-1"></i>
+        <i class="fas fa-bookmark text-yellow-500 w-8 p-1"></i>
         <span>
             Save
             {$client_settings.target_lili?.name
-                ? `to \`${$client_settings.target_lili.name}\``
+                ? `to ${$client_settings.target_lili.name}`
                 : 'URL'}
         </span>
     {/if}

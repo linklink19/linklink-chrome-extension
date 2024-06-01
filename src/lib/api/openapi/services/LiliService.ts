@@ -17,7 +17,7 @@ export class LiliService {
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static createLiliPost(
+    public static liliPost(
         requestBody: LiliCreate,
         authToken?: (string | null),
     ): CancelablePromise<LiliOutput> {
@@ -46,7 +46,7 @@ export class LiliService {
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static readLiliGet(
+    public static liliGet(
         includePrivate: boolean = true,
         includeNonUserPublic: boolean = true,
         starredOnly: boolean = false,
@@ -81,7 +81,7 @@ export class LiliService {
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static updateLiliPut(
+    public static liliPut(
         requestBody: LiliInput,
         authToken?: (string | null),
     ): CancelablePromise<LiliOutput> {
@@ -105,7 +105,7 @@ export class LiliService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static deleteLiliDelete(
+    public static liliDelete(
         requestBody: Array<string>,
         authToken?: (string | null),
     ): CancelablePromise<Array<string>> {
@@ -129,7 +129,7 @@ export class LiliService {
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static readByIdLiliIdGet(
+    public static liliIdGet(
         id: string,
         authToken?: (string | null),
     ): CancelablePromise<LiliOutput> {
@@ -154,7 +154,7 @@ export class LiliService {
      * @returns LiliInfo Successful Response
      * @throws ApiError
      */
-    public static getByIdLiliInfoIdGet(
+    public static liliInfoIdGet(
         id: string,
         authToken?: (string | null),
     ): CancelablePromise<LiliInfo> {
@@ -182,7 +182,7 @@ export class LiliService {
      * @returns LiliInfo Successful Response
      * @throws ApiError
      */
-    public static readLiliInfoGet(
+    public static liliInfoGet(
         includePrivate: boolean = true,
         includeNonUserPublic: boolean = true,
         limit: number = 9,

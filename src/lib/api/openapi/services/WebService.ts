@@ -13,7 +13,7 @@ export class WebService {
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static getTitleWebInfoTitleGet(
+    public static webInfoTitleGet(
         url: string,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
@@ -33,7 +33,7 @@ export class WebService {
      * @returns LinkAutoFill Successful Response
      * @throws ApiError
      */
-    public static getLinkAutofillWebInfoAutofillGet(
+    public static webInfoAutofillGet(
         url: string,
     ): CancelablePromise<LinkAutoFill> {
         return __request(OpenAPI, {

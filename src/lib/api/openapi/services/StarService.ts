@@ -7,14 +7,16 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class StarService {
     /**
-     *  Star
+     *  Set Star
      * @param liliId
+     * @param star
      * @param authToken
      * @returns number Successful Response
      * @throws ApiError
      */
-    public static starStarPost(
+    public static starPost(
         liliId: string,
+        star: boolean,
         authToken?: (string | null),
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -25,31 +27,7 @@ export class StarService {
             },
             query: {
                 'lili_id': liliId,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     *  Unstar
-     * @param liliId
-     * @param authToken
-     * @returns number Successful Response
-     * @throws ApiError
-     */
-    public static unstarStarDelete(
-        liliId: string,
-        authToken?: (string | null),
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/star/',
-            cookies: {
-                'auth_token': authToken,
-            },
-            query: {
-                'lili_id': liliId,
+                'star': star,
             },
             errors: {
                 422: `Validation Error`,
