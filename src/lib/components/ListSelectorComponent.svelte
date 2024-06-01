@@ -1,10 +1,11 @@
 <script lang="ts">
     import { WEBSITE_URL } from '$lib/constants';
-    import { account_info_store, client_settings, client_status } from '$lib/stores';
+    import { account_info_store, client_settings, client_status, current_lili } from '$lib/stores';
     import { slide } from 'svelte/transition';
     import { quintOut } from 'svelte/easing';
-    import { SearchService, type NameRecord } from '$lib/api/openapi';
-    import { tick } from 'svelte';
+    import { SearchService, type NameRecord, LiliService } from '$lib/api/openapi';
+    import { onMount, tick } from 'svelte';
+    import LinkComponent from '$lib/components/LinkComponent.svelte';
     $: target_url = `${WEBSITE_URL}/lili/${$client_settings.target_lili?.id ?? $account_info_store!.workspace_id}`;
 
     let search_field: HTMLInputElement;
@@ -26,6 +27,7 @@
             }, timeout);
         };
     }
+    $: $client_settings, update_current_lili();
 
     let search_string = '';
     let search_results: NameRecord[] = [];
@@ -36,10 +38,18 @@
         });
     };
     const process_change = debounce(update_search_results);
-
     const select_list = (name_record: NameRecord) => {
         $client_settings.target_lili = name_record;
     };
+    const update_current_lili = async () => {
+        $current_lili = await LiliService.liliIdGet($client_settings.target_lili!.id);
+    };
+
+    onMount(async () => {
+        if ($current_lili === null) {
+            await update_current_lili();
+        }
+    });
 </script>
 
 <div class="flex flex-col">
@@ -47,13 +57,13 @@
 
         <button
             class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
-            on:click={() => {$client_status.show_current_list = !$client_status.show_current_list;}}
+            on:click={() => {$client_settings.show_current_list = !$client_settings.show_current_list;}}
         >
             <span class="flex justify-center items-center">
                 <i
                     class="fas h-full w-8"
-                    class:fa-eye={$client_status.show_current_list}
-                    class:fa-eye-slash={!$client_status.show_current_list}
+                    class:fa-eye={$client_settings.show_current_list}
+                    class:fa-eye-slash={!$client_settings.show_current_list}
                 />
             </span>
         </button>
@@ -111,7 +121,11 @@
             </div>
         </div>
     {/if}
-    {#if $client_status.show_current_list && !$client_status.show_list_selection}
-        the current list here
+    {#if $client_settings.show_current_list && !$client_status.show_list_selection}
+        {#if $current_lili !== null}
+            {#each $current_lili.links as link}
+                <LinkComponent {link} />
+            {/each}
+        {/if}
     {/if}
 </div>
