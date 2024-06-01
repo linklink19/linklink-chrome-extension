@@ -56,7 +56,8 @@
     <div class="flex flex-grow variant-ghost rounded h-12 w-full justify-between items-center">
 
         <button
-            class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5"
+            class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5
+            border-r-[1px] border-gray-500"
             on:click={() => {$client_settings.show_current_list = !$client_settings.show_current_list;}}
         >
             <span class="flex justify-center items-center">
