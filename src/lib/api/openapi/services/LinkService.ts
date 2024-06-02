@@ -88,6 +88,38 @@ export class LinkService {
         });
     }
     /**
+     *  Create
+     * @param liliId
+     * @param requestBody
+     * @param allowDuplicate
+     * @param authToken
+     * @returns Link Successful Response
+     * @throws ApiError
+     */
+    public static linkSinglePost(
+        liliId: string,
+        requestBody: LinkCreate,
+        allowDuplicate: boolean = false,
+        authToken?: (string | null),
+    ): CancelablePromise<Link> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/link/single',
+            cookies: {
+                'auth_token': authToken,
+            },
+            query: {
+                'lili_id': liliId,
+                'allow_duplicate': allowDuplicate,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      *  Set
      * @param liliId
      * @param requestBody

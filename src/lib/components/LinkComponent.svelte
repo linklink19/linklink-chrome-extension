@@ -57,8 +57,12 @@
         link_edit_mode = false;
     };
 
+    let showing_copy_tick = false;
     function copyHandler(): void {
-        // todo
+        showing_copy_tick = true;
+        setTimeout(() => {
+            showing_copy_tick = false;
+        }, 1000);
     }
 
     const delete_confirm = async () => {
@@ -77,6 +81,7 @@
         hovering = true;
     }}
     on:mouseleave={() => {hovering = false;}}
+    role="link" tabindex="0"
 >
     <div class="relative m-0 flex w-full min-w-0 items-center justify-between whitespace-nowrap gap-0.5">
         <div class="w-full flex-col">
@@ -157,7 +162,11 @@
                         />
                     {/if}
                     <button
-                        class="fa-solid fa-clone hover:text-primary-500"
+                        class="fa-solid"
+                        class:fa-check={showing_copy_tick}
+                        class:text-success-500={showing_copy_tick}
+                        class:hover:text-primary-500={!showing_copy_tick}
+                        class:fa-clone={!showing_copy_tick}
                         use:clipboard={link.url}
                         on:click={copyHandler}
                     />

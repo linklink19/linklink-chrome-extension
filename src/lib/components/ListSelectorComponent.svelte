@@ -58,7 +58,10 @@
         <button
             class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5
             border-r-[1px] border-gray-500"
-            on:click={() => {$client_settings.show_current_list = !$client_settings.show_current_list;}}
+            on:click={() => {
+                $client_settings.show_current_list = !$client_settings.show_current_list;
+                $client_settings.target_lili = $client_settings.target_lili;
+            }}
         >
             <span class="flex items-center justify-center">
                 <i

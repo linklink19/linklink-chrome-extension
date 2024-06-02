@@ -11,7 +11,7 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "devext": "nodemon --watch src --watch static --exec \"vite build\" -e json,ts,css,html,svelte",
-    "openapi": "openapi --input http://127.0.0.1:8000/openapi.json --output ./src/lib/api/openapi --request ./src/lib/api/request_reference.ts"
+    "openapi": "openapi --input http://127.0.0.1:8000/openapi.json --output ./src/lib/api/openapi"
   },
   "devDependencies": {
     "@skeletonlabs/skeleton": "2.9.1",

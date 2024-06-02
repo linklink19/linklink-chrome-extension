@@ -1,30 +1,27 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import { ApiError } from './ApiError';
+import type { ApiRequestOptions } from './ApiRequestOptions';
+import type { ApiResult } from './ApiResult';
+import { CancelablePromise } from './CancelablePromise';
+import type { OnCancel } from './CancelablePromise';
+import type { OpenAPIConfig } from './OpenAPI';
 
-import { ApiError } from '$lib/api/openapi/core/ApiError';
-import type { ApiRequestOptions } from '$lib/api/openapi/core/ApiRequestOptions';
-import type { ApiResult } from '$lib/api/openapi/core/ApiResult';
-import { CancelablePromise } from '$lib/api/openapi/core/CancelablePromise';
-import type { OnCancel } from '$lib/api/openapi/core/CancelablePromise';
-import type { OpenAPIConfig } from '$lib/api/openapi/core/OpenAPI';
-import { account_info_store } from '$lib/stores';
-import { error } from '@sveltejs/kit';
-import { AuthService } from '$lib/api/openapi/services/AuthService';
-// import { logout, refresh_tokens } from '$lib/api/auth';
-
-const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
+export const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
     return value !== undefined && value !== null;
 };
 
-const isString = (value: any): value is string => {
+export const isString = (value: any): value is string => {
     return typeof value === 'string';
 };
 
-const isStringWithValue = (value: any): value is string => {
+export const isStringWithValue = (value: any): value is string => {
     return isString(value) && value !== '';
 };
-const isBlob = (value: any): value is Blob => {
+
+export const isBlob = (value: any): value is Blob => {
     return (
         typeof value === 'object' &&
         typeof value.type === 'string' &&
@@ -37,11 +34,11 @@ const isBlob = (value: any): value is Blob => {
     );
 };
 
-const isFormData = (value: any): value is FormData => {
+export const isFormData = (value: any): value is FormData => {
     return value instanceof FormData;
 };
 
-const base64 = (str: string): string => {
+export const base64 = (str: string): string => {
     try {
         return btoa(str);
     } catch (err) {
@@ -50,7 +47,7 @@ const base64 = (str: string): string => {
     }
 };
 
-const getQueryString = (params: Record<string, any>): string => {
+export const getQueryString = (params: Record<string, any>): string => {
     const qs: string[] = [];
 
     const append = (key: string, value: any) => {
@@ -60,7 +57,7 @@ const getQueryString = (params: Record<string, any>): string => {
     const process = (key: string, value: any) => {
         if (isDefined(value)) {
             if (Array.isArray(value)) {
-                value.forEach((v) => {
+                value.forEach(v => {
                     process(key, v);
                 });
             } else if (typeof value === 'object') {
@@ -103,7 +100,7 @@ const getUrl = (config: OpenAPIConfig, options: ApiRequestOptions): string => {
     return url;
 };
 
-const getFormData = (options: ApiRequestOptions): FormData | undefined => {
+export const getFormData = (options: ApiRequestOptions): FormData | undefined => {
     if (options.formData) {
         const formData = new FormData();
 
@@ -119,7 +116,7 @@ const getFormData = (options: ApiRequestOptions): FormData | undefined => {
             .filter(([_, value]) => isDefined(value))
             .forEach(([key, value]) => {
                 if (Array.isArray(value)) {
-                    value.forEach((v) => process(key, v));
+                    value.forEach(v => process(key, v));
                 } else {
                     process(key, value);
                 }
@@ -132,32 +129,31 @@ const getFormData = (options: ApiRequestOptions): FormData | undefined => {
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 
-const resolve = async <T>(options: ApiRequestOptions, resolver?: T | Resolver<T>): Promise<T | undefined> => {
+export const resolve = async <T>(options: ApiRequestOptions, resolver?: T | Resolver<T>): Promise<T | undefined> => {
     if (typeof resolver === 'function') {
         return (resolver as Resolver<T>)(options);
     }
     return resolver;
 };
 
-const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions): Promise<Headers> => {
-    const token = await resolve(options, config.TOKEN);
-    const username = await resolve(options, config.USERNAME);
-    const password = await resolve(options, config.PASSWORD);
-    const additionalHeaders = await resolve(options, config.HEADERS);
+export const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions): Promise<Headers> => {
+    const [token, username, password, additionalHeaders] = await Promise.all([
+        resolve(options, config.TOKEN),
+        resolve(options, config.USERNAME),
+        resolve(options, config.PASSWORD),
+        resolve(options, config.HEADERS),
+    ]);
 
     const headers = Object.entries({
         Accept: 'application/json',
         ...additionalHeaders,
-        ...options.headers
+        ...options.headers,
     })
         .filter(([_, value]) => isDefined(value))
-        .reduce(
-            (headers, [key, value]) => ({
-                ...headers,
-                [key]: String(value)
-            }),
-            {} as Record<string, string>
-        );
+        .reduce((headers, [key, value]) => ({
+            ...headers,
+            [key]: String(value),
+        }), {} as Record<string, string>);
 
     if (isStringWithValue(token)) {
         headers['Authorization'] = `Bearer ${token}`;
@@ -168,7 +164,7 @@ const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions): Pr
         headers['Authorization'] = `Basic ${credentials}`;
     }
 
-    if (options.body) {
+    if (options.body !== undefined) {
         if (options.mediaType) {
             headers['Content-Type'] = options.mediaType;
         } else if (isBlob(options.body)) {
@@ -183,10 +179,10 @@ const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions): Pr
     return new Headers(headers);
 };
 
-const getRequestBody = (options: ApiRequestOptions): any => {
+export const getRequestBody = (options: ApiRequestOptions): any => {
     if (options.body !== undefined) {
         if (options.mediaType?.includes('/json')) {
-            return JSON.stringify(options.body);
+            return JSON.stringify(options.body)
         } else if (isString(options.body) || isBlob(options.body) || isFormData(options.body)) {
             return options.body;
         } else {
@@ -211,7 +207,7 @@ export const sendRequest = async (
         headers,
         body: body ?? formData,
         method: options.method,
-        signal: controller.signal
+        signal: controller.signal,
     };
 
     if (config.WITH_CREDENTIALS) {
@@ -223,7 +219,7 @@ export const sendRequest = async (
     return await fetch(url, request);
 };
 
-const getResponseHeader = (response: Response, responseHeader?: string): string | undefined => {
+export const getResponseHeader = (response: Response, responseHeader?: string): string | undefined => {
     if (responseHeader) {
         const content = response.headers.get(responseHeader);
         if (isString(content)) {
@@ -233,13 +229,13 @@ const getResponseHeader = (response: Response, responseHeader?: string): string 
     return undefined;
 };
 
-const getResponseBody = async (response: Response): Promise<any> => {
+export const getResponseBody = async (response: Response): Promise<any> => {
     if (response.status !== 204) {
         try {
             const contentType = response.headers.get('Content-Type');
             if (contentType) {
-                const jsonTypes = ['application/json', 'application/problem+json'];
-                const isJSON = jsonTypes.some((type) => contentType.toLowerCase().startsWith(type));
+                const jsonTypes = ['application/json', 'application/problem+json']
+                const isJSON = jsonTypes.some(type => contentType.toLowerCase().startsWith(type));
                 if (isJSON) {
                     return await response.json();
                 } else {
@@ -253,7 +249,7 @@ const getResponseBody = async (response: Response): Promise<any> => {
     return undefined;
 };
 
-const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void => {
+export const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void => {
     const errors: Record<number, string> = {
         400: 'Bad Request',
         401: 'Unauthorized',
@@ -262,8 +258,8 @@ const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void =>
         500: 'Internal Server Error',
         502: 'Bad Gateway',
         503: 'Service Unavailable',
-        ...options.errors
-    };
+        ...options.errors,
+    }
 
     const error = errors[result.status];
     if (error) {
@@ -271,7 +267,19 @@ const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void =>
     }
 
     if (!result.ok) {
-        throw new ApiError(options, result, 'Generic Error');
+        const errorStatus = result.status ?? 'unknown';
+        const errorStatusText = result.statusText ?? 'unknown';
+        const errorBody = (() => {
+            try {
+                return JSON.stringify(result.body, null, 2);
+            } catch (e) {
+                return undefined;
+            }
+        })();
+
+        throw new ApiError(options, result,
+            `Generic Error: status: ${errorStatus}; status text: ${errorStatusText}; body: ${errorBody}`
+        );
     }
 };
 
@@ -284,76 +292,31 @@ const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void =>
  */
 export const request = <T>(config: OpenAPIConfig, options: ApiRequestOptions): CancelablePromise<T> => {
     return new CancelablePromise(async (resolve, reject, onCancel) => {
-        let retry_count = 0;
-        const n_tries = 3;
-        let succeeded = false;
         try {
-            while (!succeeded) {
-                try {
-                    const url = getUrl(config, options);
-                    const formData = getFormData(options);
-                    const body = getRequestBody(options);
-                    const headers = await getHeaders(config, options);
+            const url = getUrl(config, options);
+            const formData = getFormData(options);
+            const body = getRequestBody(options);
+            const headers = await getHeaders(config, options);
 
-                    if (!onCancel.isCancelled) {
-                        const response = await sendRequest(config, options, url, body, formData, headers, onCancel);
-                        const responseBody = await getResponseBody(response);
-                        const responseHeader = getResponseHeader(response, options.responseHeader);
+            if (!onCancel.isCancelled) {
+                const response = await sendRequest(config, options, url, body, formData, headers, onCancel);
+                const responseBody = await getResponseBody(response);
+                const responseHeader = getResponseHeader(response, options.responseHeader);
 
-                        const result: ApiResult = {
-                            url,
-                            ok: response.ok,
-                            status: response.status,
-                            statusText: response.statusText,
-                            body: responseHeader ?? responseBody
-                        };
+                const result: ApiResult = {
+                    url,
+                    ok: response.ok,
+                    status: response.status,
+                    statusText: response.statusText,
+                    body: responseHeader ?? responseBody,
+                };
 
-                        catchErrorCodes(options, result);
+                catchErrorCodes(options, result);
 
-                        resolve(result.body);
-                    }
-                    succeeded = true;
-                } catch (error) {
-                    if (retry_count != n_tries) {
-                        await handle_api_error(error, config, options, false, false, true);
-                    } else {
-                        await handle_api_error(error, config, options, false, true, false);
-                    }
-                    retry_count++;
-                    if (retry_count == n_tries) {
-                        throw error;
-                    }
-                }
+                resolve(result.body);
             }
-        } catch (api_error) {
-            await handle_api_error(api_error, config, options);
+        } catch (error) {
+            reject(error);
         }
     });
 };
-
-async function handle_api_error(
-    api_error: ApiError | unknown,
-    config?: OpenAPIConfig,
-    options?: ApiRequestOptions,
-    alert_enabled: boolean = true,
-    throw_error: boolean = true,
-    try_refresh: boolean = false
-) {
-    if (!(api_error instanceof ApiError)) {
-        console.log('Unknown error', api_error);
-        // alert_any_error('Unknown Error.');
-        throw api_error;
-    }
-    console.log('handling API error');
-    if (api_error.status == 401 && try_refresh) {
-        if (options?.url == '/auth/refresh-tokens' || !(config && options)) {
-            account_info_store.set(null);
-        } else {
-            await AuthService.authRefreshTokensPost();
-        }
-    } else {
-        if (throw_error) {
-            throw error(api_error.status, api_error);
-        }
-    }
-}

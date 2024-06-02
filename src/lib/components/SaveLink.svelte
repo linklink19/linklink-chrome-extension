@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { LinkService } from '$lib/api/openapi';
+    import { ApiError, LinkService } from '$lib/api/openapi';
     import { account_info_store, client_settings } from '$lib/stores';
+    import { onMount } from 'svelte';
 
     let show_saved = false;
     let awaiting_single_link_save = false;
@@ -10,53 +11,56 @@
             show_saved = false;
         }, 1500);
     };
+    let tab: chrome.tabs.Tab | null = null;
+    const save_set_tab = async () => {
+        awaiting_single_link_save = true;
+        try {
+            await LinkService.linkSinglePost(
+            $client_settings.target_lili?.id ?? $account_info_store!.workspace_id,
+            {
+                order_in_list: 0,
+                name: tab!.title!,
+                url: tab!.url!
+            })
+            saved_notification();
+            $client_settings = $client_settings;
+        } catch (error: unknown) {
+            if (error instanceof ApiError) {
+                alert(error.body.detail);
+            } else {
+                alert('An error occurred while saving the link');
+            }
+            show_saved = false;
+        } finally {
+            awaiting_single_link_save = false;
+        }
+    };
 
     const save_current_link = () => {
-        console.log('current link');
-        chrome.tabs.query({ active: true, lastFocusedWindow: true }, async (tabs) => {
-            let tab = tabs[0];
-            console.log(tab);
-            try {
-                awaiting_single_link_save = true;
-                let saved_link = await LinkService.linkPost(
-                    $client_settings.target_lili?.id ?? $account_info_store!.workspace_id,
-                    [
-                        {
-                            order_in_list: 0,
-                            name: tab.title!,
-                            url: tab.url!
-                        }
-                    ]
-                );
-                if (saved_link !== null) {
-                    saved_notification();
-                }
-            } catch {
-                console.log('error saving link');
-            } finally {
-                awaiting_single_link_save = false;
-            }
-        });
+        save_set_tab();
     };
+    onMount(() => {
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+            tab = tabs[0];
+        });
+    });
 </script>
 
 <button
-    class="btn rounded w-full h-12"
+    class="h-12 w-full rounded btn"
     class:variant-ghost-surface={!show_saved}
     class:variant-ghost-success={show_saved}
     on:click={save_current_link}
     disabled={awaiting_single_link_save || show_saved}
 >
     {#if show_saved}
-        <i class="fas fa-check-circle w-8 p-1"></i>
+        <i class="w-8 p-1 fas fa-check-circle"></i>
         <span> Saved!</span>
     {:else}
-        <i class="fas fa-bookmark text-yellow-500 w-8 p-1"></i>
+        <i class="w-8 p-1 text-yellow-500 fas fa-bookmark"></i>
         <span>
             Save
-            {$client_settings.target_lili?.name
-                ? `to ${$client_settings.target_lili.name}`
-                : 'URL'}
+            {$client_settings.target_lili?.name ? `to ${$client_settings.target_lili.name}` : 'URL'}
         </span>
     {/if}
 </button>
