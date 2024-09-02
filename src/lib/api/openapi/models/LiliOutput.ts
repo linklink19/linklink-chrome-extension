@@ -3,18 +3,33 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Link } from './Link';
+/**
+ * Includes fields that cannot be edited by the user and fields that are specific to the user.
+ */
 export type LiliOutput = {
+    id: string;
     name: string;
-    description?: (string | null);
+    description: string;
     links: Array<Link>;
     public_access: boolean;
-    id: string;
+    unlisted: boolean;
+    owner: string;
     edited_at: string;
     created_at: string;
     updated_at: string;
-    owner: string;
-    profile_picture_url: (string | null);
-    starred: boolean;
-    n_stars: number;
+    n_bookmarks: number;
+    n_links: number;
+    permission: LiliOutput.permission;
+    permissions: Array<'owner' | 'admin' | 'edit_permissions' | 'edit' | 'view'>;
+    bookmarked: boolean;
 };
+export namespace LiliOutput {
+    export enum permission {
+        OWNER = 'owner',
+        ADMIN = 'admin',
+        EDIT_PERMISSIONS = 'edit_permissions',
+        EDIT = 'edit',
+        VIEW = 'view',
+    }
+}
 

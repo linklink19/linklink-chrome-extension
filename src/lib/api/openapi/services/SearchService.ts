@@ -11,53 +11,58 @@ export class SearchService {
     /**
      *  Search
      * :return: list of lilis
-     * @param searchTerm
-     * @param authToken
      * @returns LiliOutput Successful Response
      * @throws ApiError
      */
-    public static searchGet(
-        searchTerm: string = '',
-        authToken?: (string | null),
-    ): CancelablePromise<Array<LiliOutput>> {
+    public static searchGet({
+        searchTerm = '',
+        userOnly = false,
+        authToken
+    }: {
+        searchTerm?: string;
+        userOnly?: boolean;
+        authToken?: string | null;
+    }): CancelablePromise<Array<LiliOutput>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/search/',
             cookies: {
-                'auth_token': authToken,
+                auth_token: authToken
             },
             query: {
-                'search_term': searchTerm,
+                search_term: searchTerm,
+                user_only: userOnly
             },
             errors: {
-                422: `Validation Error`,
-            },
+                422: `Validation Error`
+            }
         });
     }
     /**
      *  Search
      * Used for extension.
-     * @param searchTerm
-     * @param authToken
      * @returns NameRecord Successful Response
      * @throws ApiError
      */
-    public static searchOwnLiliNamesGet(
-        searchTerm: string = '',
-        authToken?: (string | null),
-    ): CancelablePromise<Array<NameRecord>> {
+    public static searchOwnLiliNamesGet({
+        searchTerm = '',
+        authToken
+    }: {
+        searchTerm?: string;
+        authToken?: string | null;
+    }): CancelablePromise<Array<NameRecord>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/search/own-lili-names',
             cookies: {
-                'auth_token': authToken,
+                auth_token: authToken
             },
             query: {
-                'search_term': searchTerm,
+                search_term: searchTerm
             },
             errors: {
-                422: `Validation Error`,
-            },
+                422: `Validation Error`
+            }
         });
     }
 }

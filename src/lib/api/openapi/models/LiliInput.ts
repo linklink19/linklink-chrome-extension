@@ -4,13 +4,11 @@
 /* eslint-disable */
 import type { Link } from './Link';
 export type LiliInput = {
+    id: string;
     name: string;
-    description?: (string | null);
+    description: string;
     links: Array<Link>;
     public_access: boolean;
-    id: string;
-    edited_at: string;
-    created_at: string;
-    updated_at: string;
+    unlisted: boolean;
 };
 

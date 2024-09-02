@@ -5,29 +5,30 @@
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class StarService {
+export class BookmarkService {
     /**
-     *  Set Star
-     * @param liliId
-     * @param star
-     * @param authToken
+     *  Set Bookmark
      * @returns number Successful Response
      * @throws ApiError
      */
-    public static starPost(
+    public static bookmarkPost({
+        liliId,
+        bookmark,
+        authToken,
+    }: {
         liliId: string,
-        star: boolean,
+        bookmark: boolean,
         authToken?: (string | null),
-    ): CancelablePromise<number> {
+    }): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/star/',
+            url: '/bookmark/',
             cookies: {
                 'auth_token': authToken,
             },
             query: {
                 'lili_id': liliId,
-                'star': star,
+                'bookmark': bookmark,
             },
             errors: {
                 422: `Validation Error`,

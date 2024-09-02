@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Link = {
+    id: string;
+    lili_id: string;
     order_in_list: number;
     url: string;
     name: string;
-    description?: (string | null);
-    lili_id?: string;
-    id: string;
+    description: string;
 };
 

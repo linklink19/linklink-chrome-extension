@@ -2,73 +2,82 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AccountInfo } from '../models/AccountInfo';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class AccountService {
+export class AdminService {
     /**
-     *  Read
-     * Get the user editable parts of an account.
-     * @returns AccountInfo Successful Response
-     * @throws ApiError
-     */
-    public static accountDetailsGet({
-        authToken,
-    }: {
-        authToken?: (string | null),
-    }): CancelablePromise<AccountInfo> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/account/details',
-            cookies: {
-                'auth_token': authToken,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     *  Update
-     * Change the user editable parts of an account.
-     * @returns AccountInfo Successful Response
-     * @throws ApiError
-     */
-    public static accountChangeDetailsPost({
-        requestBody,
-        authToken,
-    }: {
-        requestBody: AccountInfo,
-        authToken?: (string | null),
-    }): CancelablePromise<AccountInfo> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/account/change_details',
-            cookies: {
-                'auth_token': authToken,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     *  Delete
-     * Delete the user account.
+     * Set Featured Lili
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static accountDeleteDelete({
+    public static adminFeaturedLiliPost({
+        liliId,
+        description,
+        orderInShowcase,
         authToken,
     }: {
+        liliId: string,
+        description: string,
+        orderInShowcase?: number,
+        authToken?: (string | null),
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/featured-lili',
+            cookies: {
+                'auth_token': authToken,
+            },
+            query: {
+                'lili_id': liliId,
+                'description': description,
+                'order_in_showcase': orderInShowcase,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Delete Featured Lili
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static adminFeaturedLiliDelete({
+        liliId,
+        authToken,
+    }: {
+        liliId: string,
         authToken?: (string | null),
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/account/delete',
+            url: '/admin/featured-lili',
+            cookies: {
+                'auth_token': authToken,
+            },
+            query: {
+                'lili_id': liliId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Is Admin
+     * Can only be accessed by admins.
+     * @returns boolean Successful Response
+     * @throws ApiError
+     */
+    public static adminIsAdminGet({
+        authToken,
+    }: {
+        authToken?: (string | null),
+    }): CancelablePromise<boolean> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/is-admin',
             cookies: {
                 'auth_token': authToken,
             },

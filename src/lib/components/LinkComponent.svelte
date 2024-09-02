@@ -47,7 +47,7 @@
 
     const save_changes = async () => {
         // TODO: make this faster.
-        await LinkService.linkPut(link);
+        await LinkService.linkPut({ requestBody: link });
         pre_edit_link = structuredClone(link);
         link_edit_mode = false;
         hovering = false;
@@ -66,7 +66,7 @@
     }
 
     const delete_confirm = async () => {
-        LinkService.linkDelete([link.id]);
+        LinkService.linkDelete({ requestBody: [link.id] });
     };
 </script>
 
@@ -80,10 +80,15 @@
     on:mouseenter={() => {
         hovering = true;
     }}
-    on:mouseleave={() => {hovering = false;}}
-    role="link" tabindex="0"
+    on:mouseleave={() => {
+        hovering = false;
+    }}
+    role="link"
+    tabindex="0"
 >
-    <div class="relative m-0 flex w-full min-w-0 items-center justify-between whitespace-nowrap gap-0.5">
+    <div
+        class="relative m-0 flex w-full min-w-0 items-center justify-between whitespace-nowrap gap-0.5"
+    >
         <div class="w-full flex-col">
             <div class="flex h-12 w-full items-center">
                 <a
@@ -94,7 +99,11 @@
                     data-sveltekit-preload-data="off"
                 >
                     <!-- favicon -->
-                    <img class="h-5 w-5 select-none justify-self-start icon" src={favicon_src} alt="favicon" />
+                    <img
+                        class="h-5 w-5 select-none justify-self-start icon"
+                        src={favicon_src}
+                        alt="favicon"
+                    />
                     <!-- title -->
                     <div
                         title={link.url}
@@ -138,12 +147,16 @@
             </div>
         </div>
         <!-- Buttons - invisible if LINK row is being edited. -->
-        <div class="absolute top-1/2 right-0 z-10 flex h-full -translate-y-1/2 transform" class:hidden={link_edit_mode}>
+        <div
+            class="absolute top-1/2 right-0 z-10 flex h-full -translate-y-1/2 transform"
+            class:hidden={link_edit_mode}
+        >
             <div class="h-full w-full">
                 <!-- bg-surface-900" class:bg-surface-800={hovering} /> -->
                 <div class="flex h-full gap-3 rounded-r pr-4">
                     <!-- bg-surface-900" class:bg-surface-800={hovering}> -->
-                    {#if true} <!-- Client can always edit their own list -->
+                    {#if true}
+                        <!-- Client can always edit their own list -->
                         <!-- Delete button -->
                         <button
                             class="hidden pl-2 text-error-400 fa-solid fa-trash hover:text-primary-500 sm:block"
@@ -217,45 +230,48 @@
             style="color: #f0f0f0; text-decoration: none;"
             data-sveltekit-preload-data="off"
             class="mr-5 ml-5 cursor-pointer select-none pb-2 text-sm font-light tracking-wider sm:mr-12 sm:ml-12 sm:text-justify sm:text-base"
-        >{link.description}</a
+            >{link.description}</a
         >
     {/if}
 </div>
 
 <style>
-  .fade-right {
-    --mask: linear-gradient(
-                    to right,
-                    rgba(0, 0, 0, 1) 0,
-                    rgba(0, 0, 0, 1) calc(100% - 100px),
-                    rgba(0, 0, 0, 0) calc(100% - 45px),
-                    rgba(0, 0, 0, 0) 0
-    ) 100% 50% / 100% 100% repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
-  }
+    .fade-right {
+        --mask: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 1) 0,
+                rgba(0, 0, 0, 1) calc(100% - 100px),
+                rgba(0, 0, 0, 0) calc(100% - 45px),
+                rgba(0, 0, 0, 0) 0
+            )
+            100% 50% / 100% 100% repeat-x;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
 
-  .fade-right-strong {
-    --mask: linear-gradient(
-                    to right,
-                    rgba(0, 0, 0, 1) 0,
-                    rgba(0, 0, 0, 1) calc(100% - 130px),
-                    rgba(0, 0, 0, 0) calc(100% - 75px),
-                    rgba(0, 0, 0, 0) 0
-    ) 100% 50% / 100% 100% repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
-  }
+    .fade-right-strong {
+        --mask: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 1) 0,
+                rgba(0, 0, 0, 1) calc(100% - 130px),
+                rgba(0, 0, 0, 0) calc(100% - 75px),
+                rgba(0, 0, 0, 0) 0
+            )
+            100% 50% / 100% 100% repeat-x;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
 
-  .fade_left {
-    --mask: linear-gradient(
-                    to left,
-                    rgba(0, 0, 0, 1) 0,
-                    rgba(0, 0, 0, 1) 20%,
-                    rgba(0, 0, 0, 0) 100%,
-                    rgba(0, 0, 0, 0) 0
-    ) 100% 50% / 100% 100% repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
-  }
+    .fade_left {
+        --mask: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 1) 0,
+                rgba(0, 0, 0, 1) 20%,
+                rgba(0, 0, 0, 0) 100%,
+                rgba(0, 0, 0, 0) 0
+            )
+            100% 50% / 100% 100% repeat-x;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+    }
 </style>

@@ -11,16 +11,16 @@
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
         try {
-            let account_info = await AuthService.authCheckAuthGet();
+            let account_info = await AuthService.authCheckAuthGet({});
             if (account_info) {
                 console.log('logged in');
                 $account_info_store = account_info;
             } else {
                 console.log('not logged in');
                 try {
-                    await AuthService.authRefreshTokensPost();
+                    await AuthService.authRefreshTokensPost({});
                 } catch {}
-                let account_info = await AuthService.authCheckAuthGet();
+                let account_info = await AuthService.authCheckAuthGet({});
                 if (account_info) {
                     console.log('logged in after refresh');
                     $account_info_store = account_info;

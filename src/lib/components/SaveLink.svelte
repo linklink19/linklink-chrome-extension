@@ -15,13 +15,19 @@
     const save_set_tab = async () => {
         awaiting_single_link_save = true;
         try {
-            await LinkService.linkSinglePost(
-            $client_settings.target_lili?.id ?? $account_info_store!.workspace_id,
-            {
-                order_in_list: 0,
-                name: tab!.title!,
-                url: tab!.url!
-            })
+            await LinkService.linkPost({
+                liliId: $client_settings.target_lili!.id,
+                requestBody: [
+                    {
+                        id: '00000000-0000-0000-0000-000000000000',
+                        lili_id: $client_settings.target_lili!.id,
+                        order_in_list: 0,
+                        url: tab!.url!,
+                        description: '',
+                        name: tab!.title!
+                    }
+                ]
+            });
             saved_notification();
             $client_settings = $client_settings;
         } catch (error: unknown) {

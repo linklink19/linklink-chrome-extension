@@ -12,7 +12,7 @@ export class DefaultService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static homepageGet(): CancelablePromise<any> {
+    public static get(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/',
@@ -23,21 +23,33 @@ export class DefaultService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static sessionSessionGet(): CancelablePromise<any> {
+    public static sessionGet(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/session',
         });
     }
     /**
-     * User Test
-     * @param authToken
+     * Debug
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static userTestUserTestGet(
+    public static debugGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/debug',
+        });
+    }
+    /**
+     * User Test
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static userTestGet({
+        authToken,
+    }: {
         authToken?: (string | null),
-    ): CancelablePromise<(AccountInfo | null)> {
+    }): CancelablePromise<(AccountInfo | null)> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user-test',

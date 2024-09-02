@@ -23,14 +23,20 @@
         awaiting_tabs_save = true;
         try {
             let new_lili = await LiliService.liliPost({
-                name: linklink_name_to_save,
-                links: tabs.map((tab, idx) => {
-                    return {
-                        order_in_list: idx,
-                        name: tab.title,
-                        url: tab.url
-                    };
-                })
+                requestBody: {
+                    id: '00000000-0000-0000-0000-000000000000',
+                    name: linklink_name_to_save,
+                    description: '',
+                    links: tabs.map((tab, idx) => {
+                        return {
+                            order_in_list: idx,
+                            name: tab.title,
+                            url: tab.url
+                        };
+                    }),
+                    public_access: false,
+                    unlisted: false
+                }
             });
             $client_settings.target_lili = { id: new_lili.id, name: new_lili.name };
             await chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${new_lili.id}` });

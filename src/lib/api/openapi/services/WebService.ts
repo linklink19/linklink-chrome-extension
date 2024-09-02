@@ -9,13 +9,14 @@ import { request as __request } from '../core/request';
 export class WebService {
     /**
      * Get Title
-     * @param url
      * @returns string Successful Response
      * @throws ApiError
      */
-    public static webInfoTitleGet(
+    public static webInfoTitleGet({
+        url,
+    }: {
         url: string,
-    ): CancelablePromise<string> {
+    }): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/web/info/title',
@@ -29,13 +30,14 @@ export class WebService {
     }
     /**
      * Get Link Autofill
-     * @param url
      * @returns LinkAutoFill Successful Response
      * @throws ApiError
      */
-    public static webInfoAutofillGet(
+    public static webInfoAutofillGet({
+        url,
+    }: {
         url: string,
-    ): CancelablePromise<LinkAutoFill> {
+    }): CancelablePromise<LinkAutoFill> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/web/info/autofill',

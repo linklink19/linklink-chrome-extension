@@ -2,16 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-/**
- * Includes field that come from having a current user...
- */
-export type LiliInfo = {
-    id: string;
-    permission: LiliInfo.permission;
-    permissions: Array<'owner' | 'admin' | 'edit_permissions' | 'edit' | 'view'>;
-    bookmarked: boolean;
+export type PermissionDisplay = {
+    username: string;
+    permission: PermissionDisplay.permission;
 };
-export namespace LiliInfo {
+export namespace PermissionDisplay {
     export enum permission {
         OWNER = 'owner',
         ADMIN = 'admin',

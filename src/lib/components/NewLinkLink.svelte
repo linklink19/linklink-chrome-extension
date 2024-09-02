@@ -12,8 +12,15 @@
     const create_lili = async () => {
         awaiting_lili_creation = true;
         const new_lili = await LiliService.liliPost({
-            name: linklink_name,
-            links: []
+            requestBody: {
+                // zero uuid
+                id: '00000000-0000-0000-0000-000000000000',
+                name: linklink_name,
+                description: '',
+                links: [],
+                public_access: false,
+                unlisted: false
+            }
         });
         $client_settings.target_lili = { id: new_lili.id, name: new_lili.name };
         await chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${new_lili.id}` });
@@ -21,22 +28,21 @@
     };
 </script>
 
-
 {#if !creating_list}
-<button
-    class="h-12 w-full rounded btn variant-ghost-surface"
-    on:click={async () => {
-        creating_list = true;
-        await tick();
-        input_box.focus();
-        input_box.select();
-    }}
->
-    <i class="pr-2 fas fa-circle-plus text-success-500" />
-    New LinkLink
-</button>
+    <button
+        class="h-12 w-full rounded btn variant-ghost-surface"
+        on:click={async () => {
+            creating_list = true;
+            await tick();
+            input_box.focus();
+            input_box.select();
+        }}
+    >
+        <i class="pr-2 fas fa-circle-plus text-success-500" />
+        New LinkLink
+    </button>
 {:else}
- <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2">
         <button
             class="h-8 w-8 fas fa-x text-sm text-error-500 hover:scale-125"
             on:click={() => {
@@ -66,4 +72,3 @@
         </button>
     </div>
 {/if}
-

@@ -21,13 +21,14 @@ export class AuthService {
     }
     /**
      * Verify Authorization
-     * @param requestBody
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static authGoogleAuthPost(
+    public static authGoogleAuthPost({
+        requestBody,
+    }: {
         requestBody: AuthProviderResponse,
-    ): CancelablePromise<AccountInfo> {
+    }): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/google/auth',
@@ -51,13 +52,14 @@ export class AuthService {
     }
     /**
      * Verify Authorization
-     * @param requestBody
      * @returns AccountInfo Successful Response
      * @throws ApiError
      */
-    public static authGithubAuthPost(
+    public static authGithubAuthPost({
+        requestBody,
+    }: {
         requestBody: AuthProviderResponse,
-    ): CancelablePromise<AccountInfo> {
+    }): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/github/auth',
@@ -81,13 +83,14 @@ export class AuthService {
     }
     /**
      * Check Auth
-     * @param authToken
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static authCheckAuthGet(
+    public static authCheckAuthGet({
+        authToken,
+    }: {
         authToken?: (string | null),
-    ): CancelablePromise<(AccountInfo | null)> {
+    }): CancelablePromise<(AccountInfo | null)> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/auth/check_auth',
@@ -102,15 +105,18 @@ export class AuthService {
     /**
      * Refresh Tokens
      * Refreshes the access and refresh token cookies, if it's a good idea.
-     * @param refreshToken
-     * @param authToken
+     *
+     * This endpoint does not return anything nor throw errors, it just refreshes the cookies if relevant.
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static authRefreshTokensPost(
+    public static authRefreshTokensPost({
+        refreshToken,
+        authToken,
+    }: {
         refreshToken?: (string | null),
         authToken?: (string | null),
-    ): CancelablePromise<any> {
+    }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/refresh-tokens',
@@ -126,13 +132,14 @@ export class AuthService {
     /**
      * Expire Auth
      * Dev endpoint to expire the auth token.
-     * @param authToken
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static authExpireAuthPost(
+    public static authExpireAuthPost({
+        authToken,
+    }: {
         authToken?: (string | null),
-    ): CancelablePromise<any> {
+    }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/expire-auth',
@@ -147,13 +154,14 @@ export class AuthService {
     /**
      * Expire All
      * Dev endpoint to expire all tokens.
-     * @param authToken
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static authExpireAllPost(
+    public static authExpireAllPost({
+        authToken,
+    }: {
         authToken?: (string | null),
-    ): CancelablePromise<any> {
+    }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/expire-all',

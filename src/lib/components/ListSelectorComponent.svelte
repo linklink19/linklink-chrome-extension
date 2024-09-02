@@ -33,7 +33,7 @@
     let search_results: NameRecord[] = [];
 
     const update_search_results = async () => {
-        await SearchService.searchOwnLiliNamesGet(search_string).then((res) => {
+        await SearchService.searchOwnLiliNamesGet({ searchTerm: search_string }).then((res) => {
             search_results = res;
         });
     };
@@ -42,7 +42,7 @@
         $client_settings.target_lili = name_record;
     };
     const update_current_lili = async () => {
-        $current_lili = await LiliService.liliIdGet($client_settings.target_lili!.id);
+        $current_lili = await LiliService.liliIdGet({ id: $client_settings.target_lili!.id });
     };
 
     onMount(async () => {
@@ -54,7 +54,6 @@
 
 <div class="flex flex-col">
     <div class="flex h-12 w-full flex-grow items-center justify-between rounded variant-ghost">
-
         <button
             class="btn flex justify-center items-center h-full p-2 hover:bg-white hover:bg-opacity-5
             border-r-[1px] border-gray-500"
@@ -113,8 +112,10 @@
                 {#each search_results as name_record}
                     <button
                         class="flex h-12 flex-col justify-center rounded p-2 align-middle btn text-wrap"
-                        class:variant-glass-surface={name_record.id !== $client_settings.target_lili?.id}
-                        class:variant-ringed-success={name_record.id === $client_settings.target_lili?.id}
+                        class:variant-glass-surface={name_record.id !==
+                            $client_settings.target_lili?.id}
+                        class:variant-ringed-success={name_record.id ===
+                            $client_settings.target_lili?.id}
                         on:click={() => {
                             select_list(name_record);
                         }}
@@ -126,12 +127,15 @@
         </div>
     {/if}
     {#if $client_settings.show_current_list && !$client_status.show_list_selection}
-        <div class="flex flex-col gap-2" transition:slide={{ duration: 100, easing: quintOut, axis: 'y' }}>
-        {#if $current_lili !== null}
-            {#each $current_lili.links as link}
-                <LinkComponent {link} />
-            {/each}
-        {/if}
+        <div
+            class="flex flex-col gap-2"
+            transition:slide={{ duration: 100, easing: quintOut, axis: 'y' }}
+        >
+            {#if $current_lili !== null}
+                {#each $current_lili.links as link}
+                    <LinkComponent {link} />
+                {/each}
+            {/if}
         </div>
     {/if}
 </div>
