@@ -4,13 +4,10 @@
     import { type LiliOutput, LiliService, LinkService } from '$lib/api/openapi';
     import { WEBSITE_URL } from '$lib/constants';
     import { zero_uuid } from '$lib/uuid';
+    import { refresh_user_lilis } from '$lib/api_helpers';
 
     onMount(async () => {
-        $user_lilis = await LiliService.liliGet({
-            includePrivate: true,
-            includeNonUserPublic: false,
-            limit: 100
-        })
+        await refresh_user_lilis();
     });
 
     let filter_value = '';
@@ -49,7 +46,7 @@
 
 </script>
 
-<input placeholder="Filter LinkLinks..." class="input h-[40px] px-4 mx-4 mr-4 w-[440px]" bind:value={filter_value}/>
+<input placeholder="Filter LinkLinks..." class="input h-[40px] px-4 mx-4 mr-4 w-[440px]" bind:value={filter_value} autofocus/>
 
 <div class="max-h-[440px] max-w-full overflow-y-auto overflow-x-clip flex flex-col gap-2 w-full pl-4 pr-2">
     {#each show_lilis as lili}

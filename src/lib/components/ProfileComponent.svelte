@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { WEBSITE_URL } from '$lib/constants';
     import { account_info_store } from '$lib/stores';
     import { Avatar } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
-    import { fade, fly } from 'svelte/transition';
+    import NewLinkLinkModal from '$lib/components/modals/NewLinkLinkModal.svelte';
+    import SaveTabsModal from '$lib/components/modals/SaveTabsModal.svelte';
 
     $: is_home = $page.url.pathname === '/' || $page.url.pathname === '/index.html';
 
@@ -24,7 +24,12 @@
         }
     };
     let profile_options = false;
+    let show_new_linklink = false;
+    let show_save_tabs = false;
 </script>
+
+<NewLinkLinkModal bind:show={show_new_linklink}/>
+<SaveTabsModal bind:show={show_save_tabs}/>
 
 <div class="flex justify-between items-center gap-2 h-full w-full px-2">
     {#if profile_options}
@@ -34,15 +39,23 @@
         </button>
     {:else}
     <div class="flex justify-between gap-2">
-        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm hidden" class:block={$page.url.pathname !== '/index.html'} href="/">
+        <a class="btn rounded text-sm"
+           class:variant-ringed-error={true}
+           class:hover:variant-glass-error={true}
+           class:hidden={$page.url.pathname === '/index.html'}
+           href="/">
             <i class="fas fa-caret-left"></i>
             <span>Back</span>
         </a>
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
+                on:click={() => {show_new_linklink = true;}}
+        >
             <i class="fas fa-square-plus"></i>
             <span>New LinkLink</span>
         </button>
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
+            on:click={() => {show_save_tabs = true;}}
+        >
             <i class="fas fa-window-restore"></i>
             <span>Save Tabs</span>
         </button>
