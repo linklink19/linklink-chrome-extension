@@ -49,9 +49,9 @@
 
 </script>
 
-<input placeholder="Filter LinkLinks..." class="w-full input" bind:value={filter_value}/>
+<input placeholder="Filter LinkLinks..." class="input h-[40px] px-4 mx-4 mr-4 w-[440px]" bind:value={filter_value}/>
 
-<div class="flex flex-col gap-2 w-full">
+<div class="max-h-[440px] max-w-full overflow-y-auto overflow-x-clip flex flex-col gap-2 w-full pl-4 pr-2">
     {#each show_lilis as lili}
         <div class="flex max-h-14 min-h-14 rounded justify-between w-full h-full border border-gray-500"
             on:mouseenter={() => {

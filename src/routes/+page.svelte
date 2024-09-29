@@ -1,10 +1,10 @@
 <script lang="ts">
     import LoginComponent from '$lib/components/LoginComponent.svelte';
-    import MainPage from '$lib/components/MainPage.svelte';
 
     import { AuthService } from '$lib/api/openapi';
-    import { account_info_store, client_status } from '$lib/stores';
+    import { account_info_store } from '$lib/stores';
     import { onMount } from 'svelte';
+    import UserLilis from '$lib/components/UserLilis.svelte';
 
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
@@ -42,7 +42,9 @@
 </script>
 
 {#if $account_info_store}
-    <MainPage />
+    <div class="py-4 pt-2 flex flex-col gap-2 max-w-full">
+        <UserLilis />
+    </div>
 {:else}
     <LoginComponent />
 {/if}

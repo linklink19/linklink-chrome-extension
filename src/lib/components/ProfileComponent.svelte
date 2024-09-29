@@ -4,6 +4,7 @@
     import { Avatar } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
+    import { fade, fly } from 'svelte/transition';
 
     $: is_home = $page.url.pathname === '/' || $page.url.pathname === '/index.html';
 
@@ -22,36 +23,38 @@
             await goto('/newlist');
         }
     };
+    let profile_options = false;
 </script>
 
-<div class="flex justify-between align-center h-full items-center gap-2">
+<div class="flex justify-between items-center gap-2 h-full w-full px-2">
+    {#if profile_options}
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+            <i class="fas fa-right-from-bracket"></i>
+            Sign Out
+        </button>
+    {:else}
+    <div class="flex justify-between gap-2">
+        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm hidden" class:block={$page.url.pathname !== '/index.html'} href="/">
+            <i class="fas fa-caret-left"></i>
+            <span>Back</span>
+        </a>
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+            <i class="fas fa-square-plus"></i>
+            <span>New LinkLink</span>
+        </button>
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+            <i class="fas fa-window-restore"></i>
+            <span>Save Tabs</span>
+        </button>
+    </div>
+    {/if}
     <Avatar
         src={$account_info_store?.profile_picture_url ?? ''}
         initials={get_initials($account_info_store?.name ?? '')}
         width="w-11"
         border="border-4 border-surface-300-600-token hover:!border-primary-500"
         cursor="cursor-pointer"
+        on:click={() => {profile_options = !profile_options}}
     />
-    <span class="font-bold italic h-full align">@{$account_info_store?.username}</span>
-    <div class="flex-grow"/>
-    <a
-        class="hover:underline text-sm italic h-full"
-        href={`${WEBSITE_URL}/logout`}
-        target="_blank">
-        Sign Out
-    </a>
-    {#if !is_home}
-        <button
-            class="btn h-full w-10 text-sm hover:underline italic"
-            on:click={() => {goto('/');}}
-        >
-            Back
-        </button>
-    {:else}
-        <button
-            class="btn text-success-500 text-xl h-full w-10 hover:scale-125 fas fa-circle-plus"
-            on:click={() => {goto('/newlist');}}
-        />
-    {/if}
 
 </div>

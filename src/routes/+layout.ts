@@ -3,6 +3,7 @@ import { current_tab } from '$lib/stores';
 // @ts-ignore
 import type { PageLoad } from './$types';
 //
+// @ts-ignore
 export const load: PageLoad = async ({url}) => {
     try {
         let tab = await get_current_tab();
