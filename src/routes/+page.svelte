@@ -1,8 +1,6 @@
 <script lang="ts">
-    import ListSelectorComponent from '$lib/components/ListSelectorComponent.svelte';
     import LoginComponent from '$lib/components/LoginComponent.svelte';
-    import ProfileComponent from '$lib/components/ProfileComponent.svelte';
-    import SaveLink from '$lib/components/SaveLink.svelte';
+    import MainPage from '$lib/components/MainPage.svelte';
 
     import { AuthService } from '$lib/api/openapi';
     import { account_info_store, client_status } from '$lib/stores';
@@ -44,22 +42,7 @@
 </script>
 
 {#if $account_info_store}
-    <div
-        class="flex flex-col gap-2 p-4 min-w-96"
-        class:w-96={$client_status.saving_all_tabs || $client_status.show_list_selection}
-    >
-        <!-- class:w-96={saving_tabs} -->
-        <!-- IGNORE START -->
-        <!-- This HIDDEN button is only here because otherwise the button has an expansion animation when opening the extension, idk why. -->
-        <button class="btn variant-ghost rounded h-12 hidden w-full">
-            <span> Placeholder</span>
-        </button>
-        <!-- IGNORE END -->
-
-        <SaveLink />
-        <ListSelectorComponent />
-        <ProfileComponent />
-    </div>
+    <MainPage />
 {:else}
     <LoginComponent />
 {/if}

@@ -47,6 +47,19 @@
 
     onMount(async () => {
         if ($current_lili === null) {
+            if ($client_settings.target_lili === null) {
+                let new_lili = await LiliService.liliGet({
+                    includePrivate: true,
+                    includeNonUserPublic: false,
+                    limit: 1
+                });
+                if (new_lili.length > 0) {
+                    $client_settings.target_lili = { id: new_lili[0].id, name: new_lili[0].name };
+                } else {
+                    // User has not created any LinkLinks
+                    return;
+                }
+            }
             await update_current_lili();
         }
     });

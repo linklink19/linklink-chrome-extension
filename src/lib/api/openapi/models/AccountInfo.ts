@@ -7,6 +7,5 @@ export type AccountInfo = {
     name: string;
     username: string;
     profile_picture_url?: (string | null);
-    workspace_id: string;
 };
 

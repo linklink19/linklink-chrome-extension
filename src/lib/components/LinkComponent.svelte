@@ -72,10 +72,8 @@
 
 <!-- Main -->
 <div
-    class="m-0 box-border grid w-full max-w-full text-xl border-primary-500"
+    class="grid w-full text-xl border-gray-500 border rounded shadow-lg"
     class:opacity-60={link.id.startsWith('unconfirmed')}
-    class:rounded={hovering && !link_edit_mode}
-    class:shadow-xl={hovering && !link_edit_mode}
     class:variant-glass-surface={hovering && !link_edit_mode}
     on:mouseenter={() => {
         hovering = true;

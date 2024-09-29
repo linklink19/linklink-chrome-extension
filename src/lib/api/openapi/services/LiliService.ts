@@ -17,22 +17,22 @@ export class LiliService {
      */
     public static liliPost({
         requestBody,
-        authToken
+        authToken,
     }: {
-        requestBody: LiliInput;
-        authToken?: string | null;
+        requestBody: LiliInput,
+        authToken?: (string | null),
     }): CancelablePromise<LiliOutput> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/lili/',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -48,35 +48,35 @@ export class LiliService {
         offset,
         includeUserPublic = true,
         includeNonUserPrivate = false,
-        authToken
+        authToken,
     }: {
-        includePrivate?: boolean;
-        includeNonUserPublic?: boolean;
-        bookmarkedOnly?: boolean;
-        limit?: number;
-        offset?: number;
-        includeUserPublic?: boolean;
-        includeNonUserPrivate?: boolean;
-        authToken?: string | null;
+        includePrivate?: boolean,
+        includeNonUserPublic?: boolean,
+        bookmarkedOnly?: boolean,
+        limit?: number,
+        offset?: number,
+        includeUserPublic?: boolean,
+        includeNonUserPrivate?: boolean,
+        authToken?: (string | null),
     }): CancelablePromise<Array<LiliOutput>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/lili/',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             query: {
-                include_private: includePrivate,
-                include_non_user_public: includeNonUserPublic,
-                bookmarked_only: bookmarkedOnly,
-                limit: limit,
-                offset: offset,
-                include_user_public: includeUserPublic,
-                include_non_user_private: includeNonUserPrivate
+                'include_private': includePrivate,
+                'include_non_user_public': includeNonUserPublic,
+                'bookmarked_only': bookmarkedOnly,
+                'limit': limit,
+                'offset': offset,
+                'include_user_public': includeUserPublic,
+                'include_non_user_private': includeNonUserPrivate,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -87,48 +87,48 @@ export class LiliService {
     public static liliPut({
         requestBody,
         ignoreLinks = false,
-        authToken
+        authToken,
     }: {
-        requestBody: LiliInput;
-        ignoreLinks?: boolean;
-        authToken?: string | null;
+        requestBody: LiliInput,
+        ignoreLinks?: boolean,
+        authToken?: (string | null),
     }): CancelablePromise<LiliOutput> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/lili/',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             query: {
-                ignore_links: ignoreLinks
+                'ignore_links': ignoreLinks,
             },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
      *  Read Random
      * Get a single random Linklink
-     * @returns LiliOutput Successful Response
+     * @returns any Successful Response
      * @throws ApiError
      */
     public static liliRandomGet({
-        authToken
+        authToken,
     }: {
-        authToken?: string | null;
-    }): CancelablePromise<LiliOutput> {
+        authToken?: (string | null),
+    }): CancelablePromise<(LiliOutput | null)> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/lili/random',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -138,23 +138,23 @@ export class LiliService {
      */
     public static liliIdGet({
         id,
-        authToken
+        authToken,
     }: {
-        id: string;
-        authToken?: string | null;
+        id: string,
+        authToken?: (string | null),
     }): CancelablePromise<LiliOutput> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/lili/{id}',
             path: {
-                id: id
+                'id': id,
             },
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -164,23 +164,23 @@ export class LiliService {
      */
     public static liliIdDelete({
         id,
-        authToken
+        authToken,
     }: {
-        id: string;
-        authToken?: string | null;
+        id: string,
+        authToken?: (string | null),
     }): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/lili/{id}',
             path: {
-                id: id
+                'id': id,
             },
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -190,23 +190,23 @@ export class LiliService {
      */
     public static liliInfoIdGet({
         id,
-        authToken
+        authToken,
     }: {
-        id: string;
-        authToken?: string | null;
+        id: string,
+        authToken?: (string | null),
     }): CancelablePromise<LiliInfo> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/lili/info/{id}',
             path: {
-                id: id
+                'id': id,
             },
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
 }

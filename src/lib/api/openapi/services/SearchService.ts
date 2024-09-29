@@ -17,25 +17,25 @@ export class SearchService {
     public static searchGet({
         searchTerm = '',
         userOnly = false,
-        authToken
+        authToken,
     }: {
-        searchTerm?: string;
-        userOnly?: boolean;
-        authToken?: string | null;
+        searchTerm?: string,
+        userOnly?: boolean,
+        authToken?: (string | null),
     }): CancelablePromise<Array<LiliOutput>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/search/',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             query: {
-                search_term: searchTerm,
-                user_only: userOnly
+                'search_term': searchTerm,
+                'user_only': userOnly,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
     /**
@@ -46,23 +46,23 @@ export class SearchService {
      */
     public static searchOwnLiliNamesGet({
         searchTerm = '',
-        authToken
+        authToken,
     }: {
-        searchTerm?: string;
-        authToken?: string | null;
+        searchTerm?: string,
+        authToken?: (string | null),
     }): CancelablePromise<Array<NameRecord>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/search/own-lili-names',
             cookies: {
-                auth_token: authToken
+                'auth_token': authToken,
             },
             query: {
-                search_term: searchTerm
+                'search_term': searchTerm,
             },
             errors: {
-                422: `Validation Error`
-            }
+                422: `Validation Error`,
+            },
         });
     }
 }
