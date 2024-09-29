@@ -5,6 +5,7 @@
     import { account_info_store } from '$lib/stores';
     import { onMount } from 'svelte';
     import UserLilis from '$lib/components/UserLilis.svelte';
+    import { refresh_user_lilis } from '$lib/api_helpers';
 
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
@@ -22,6 +23,7 @@
                 if (account_info) {
                     console.log('logged in after refresh');
                     $account_info_store = account_info;
+                    await refresh_user_lilis();
                 } else {
                     console.log('not logged in after refresh');
                     $account_info_store = null;

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { current_lili, current_tab, user_lilis } from '$lib/stores';
+    import { current_tab, user_lilis } from '$lib/stores';
     import { onMount } from 'svelte';
-    import { type LiliOutput, LiliService, LinkService } from '$lib/api/openapi';
+    import { type LiliOutput, LinkService } from '$lib/api/openapi';
     import { WEBSITE_URL } from '$lib/constants';
     import { zero_uuid } from '$lib/uuid';
     import { refresh_user_lilis } from '$lib/api_helpers';

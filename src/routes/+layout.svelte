@@ -5,32 +5,47 @@
     import ProfileComponent from '$lib/components/ProfileComponent.svelte';
     import Logo3 from '$lib/components/logo/logo3.svelte';
     import { WEBSITE_URL } from '$lib/constants';
+    import { page } from '$app/stores';
+    import { account_info_store } from '$lib/stores';
     export let data;
 </script>
 
 
-{#key data.url}
-<div
-  in:fly={{ x: -200, duration: 300, delay: 300 }}
-  out:fly={{ x: 200, duration: 300 }}
-  class="min-w-[480px] min-h-[600px] max-w-[480px] max-h-[600px] relative"
->
-  <button class="relative w-full h-10 flex items-center justify-items-center justify-center pt-4 align-middle hover-glow"
-  on:click={() => {
-    chrome.tabs.create({ url: `${WEBSITE_URL}` });
-  }}
-  >
-    <Logo3/>
-  </button>
-  <div class="max-h-[500px] max-w-full flex-1">
-    <slot />
+<div class="min-w-[480px] min-h-[600px] max-w-[480px] max-h-[600px] relative">
+  <div class="flex justify-between items-center align-middle px-4 pt-4">
+    <a class="btn rounded text-sm w-16"
+     class:variant-ringed-error={true}
+     class:hover:variant-glass-error={true}
+     class:invisible={'/index.html' === $page.url.pathname || '/' === $page.url.pathname}
+     href="/"
+    >
+      <i class="fas fa-caret-left"></i>
+      <span>Back</span>
+    </a>
+    <button class="relative w-full h-10 flex items-center justify-items-center justify-center align-middle hover-glow"
+    on:click={() => {
+      chrome.tabs.create({ url: `${WEBSITE_URL}` });
+    }}
+    >
+      <Logo3/>
+    </button>
+    <div class="min-w-16"></div>
   </div>
+  {#key data.url}
+    <div class="max-h-[500px] max-w-full flex-1"
+        in:fly={{ x: -200, duration: 300, delay: 300 }}
+        out:fly={{ x: 200, duration: 300 }}
+    >
+      <slot />
+    </div>
+  {/key}
 
   <div class="absolute bottom-0 left-0 right-0  backdrop-blur-xl text-white text-center p-2 flex max-h-[60px]">
-    <ProfileComponent />
+    {#if $account_info_store !== null}
+      <ProfileComponent />
+    {/if}
   </div>
 </div>
-{/key}
 
 <style>
     .hover-glow::before {

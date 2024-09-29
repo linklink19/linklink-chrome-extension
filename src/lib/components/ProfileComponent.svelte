@@ -5,6 +5,7 @@
     import { page } from '$app/stores';
     import NewLinkLinkModal from '$lib/components/modals/NewLinkLinkModal.svelte';
     import SaveTabsModal from '$lib/components/modals/SaveTabsModal.svelte';
+    import { WEBSITE_URL } from '$lib/constants';
 
     $: is_home = $page.url.pathname === '/' || $page.url.pathname === '/index.html';
 
@@ -33,20 +34,15 @@
 
 <div class="flex justify-between items-center gap-2 h-full w-full px-2">
     {#if profile_options}
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1">
+        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
+            href={`${WEBSITE_URL}/logout`}
+            target="_blank"
+        >
             <i class="fas fa-right-from-bracket"></i>
             Sign Out
-        </button>
+        </a>
     {:else}
     <div class="flex justify-between gap-2">
-        <a class="btn rounded text-sm"
-           class:variant-ringed-error={true}
-           class:hover:variant-glass-error={true}
-           class:hidden={$page.url.pathname === '/index.html'}
-           href="/">
-            <i class="fas fa-caret-left"></i>
-            <span>Back</span>
-        </a>
         <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
                 on:click={() => {show_new_linklink = true;}}
         >
