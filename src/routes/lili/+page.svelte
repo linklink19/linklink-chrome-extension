@@ -43,6 +43,7 @@
             <div class="flex justify-center items-center align-middle gap-2 pt-4">
                 <button on:click={toggle_pin} class="min-w-5 min-h-5">
                     <i class="fas fa-thumbtack text-lg hover:text-xl"
+                       class:-rotate-45={!pinned}
                        class:text-gray-400={!pinned}
                        class:text-yellow-400={pinned}
                        class:hover:text-white={true}
@@ -50,7 +51,7 @@
                 </button>
                 <button on:click={() => {
                         chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili?.id}` });
-                    }} class="hover:underline">
+                    }} class="hover:underline flex flex-nowrap items-center gap-2">
                     <span class="text-2xl">{lili.name}</span>
                     <i class="fas fa-up-right-from-square text-lg"></i>
                 </button>
@@ -68,20 +69,3 @@
         </div>
     </div>
 {/if}
-
-
-<style>
-      .icon-border {
-    position: relative;
-    display: inline-block;
-    font-size: 48px; /* Adjust size as needed */
-    color: transparent;
-    -webkit-text-stroke: 2px black; /* For WebKit browsers */
-    text-shadow:
-      2px 2px 0 black,
-      -1px -1px 0 black,
-      1px -1px 0 black,
-      -1px 1px 0 black,
-      1px 1px 0 black; /* For other browsers */
-  }
-</style>
