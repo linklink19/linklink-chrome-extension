@@ -8,16 +8,22 @@
     import { page } from '$app/stores';
     import { account_info_store } from '$lib/stores';
     export let data;
+
+    import { pinned_extension_page } from '$lib/stores';
+    let unpin_extension_page = () => {
+        $pinned_extension_page = null;
+    }
 </script>
 
 
 <div class="min-w-[480px] min-h-[600px] max-w-[480px] max-h-[600px] relative">
-  <div class="flex justify-between items-center align-middle px-4 pt-4">
-    <a class="btn rounded text-sm w-16"
+  <div class="flex justify-between items-center align-middle px-6 pt-4">
+    <a class="variant-ringed-error rounded text-sm min-w-20 flex flex-nowrap items-center py-2 align-middle gap-2 justify-center"
      class:variant-ringed-error={true}
      class:hover:variant-glass-error={true}
      class:invisible={'/index.html' === $page.url.pathname || '/' === $page.url.pathname}
      href="/"
+       on:click={unpin_extension_page}
     >
       <i class="fas fa-caret-left"></i>
       <span>Back</span>
@@ -29,13 +35,13 @@
     >
       <Logo3/>
     </button>
-    <div class="min-w-16"></div>
+    <div class="min-w-20"></div>
   </div>
   {#key data.url}
     <div class="max-h-[500px] max-w-full flex-1"
-        in:fly={{ x: -200, duration: 300, delay: 300 }}
-        out:fly={{ x: 200, duration: 300 }}
     >
+<!--        in:fly={{ x: -200, duration: 300, delay: 300 }}-->
+<!--        out:fly={{ x: 200, duration: 300 }}-->
       <slot />
     </div>
   {/key}

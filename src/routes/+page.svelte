@@ -2,10 +2,11 @@
     import LoginComponent from '$lib/components/LoginComponent.svelte';
 
     import { AuthService } from '$lib/api/openapi';
-    import { account_info_store } from '$lib/stores';
+    import { account_info_store, pinned_extension_page } from '$lib/stores';
     import { onMount } from 'svelte';
     import UserLilis from '$lib/components/UserLilis.svelte';
     import { refresh_user_lilis } from '$lib/api_helpers';
+    import { goto } from '$app/navigation';
 
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
@@ -19,16 +20,22 @@
                 try {
                     await AuthService.authRefreshTokensPost({});
                 } catch {}
-                let account_info = await AuthService.authCheckAuthGet({});
+                account_info = await AuthService.authCheckAuthGet({});
                 if (account_info) {
                     console.log('logged in after refresh');
                     $account_info_store = account_info;
-                    await refresh_user_lilis();
                 } else {
                     console.log('not logged in after refresh');
                     $account_info_store = null;
                 }
             }
+            if (account_info) {
+                await refresh_user_lilis();
+                if ($pinned_extension_page !== null) {
+                    goto($pinned_extension_page);
+                }
+            }
+
         } catch {
             console.log('error logging in');
             $account_info_store = null;
@@ -40,6 +47,7 @@
         // but for now it's ok, no custom re-login if unauthorized bs.
         // this would only break client side if someone leaves the extension open for >15 mins
         await check_login();
+
     });
 </script>
 

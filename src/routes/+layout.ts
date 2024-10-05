@@ -13,6 +13,8 @@ export const load: PageLoad = async ({url}) => {
         console.error(e);
     };
 
+
+
     return {url: url.pathname};
 };
 

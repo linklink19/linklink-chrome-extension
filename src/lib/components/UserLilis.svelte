@@ -1,14 +1,9 @@
 <script lang="ts">
     import { current_tab, user_lilis } from '$lib/stores';
-    import { onMount } from 'svelte';
     import { type LiliOutput, LinkService } from '$lib/api/openapi';
     import { WEBSITE_URL } from '$lib/constants';
     import { zero_uuid } from '$lib/uuid';
-    import { refresh_user_lilis } from '$lib/api_helpers';
 
-    onMount(async () => {
-        await refresh_user_lilis();
-    });
 
     let filter_value = '';
     $: show_lilis = $user_lilis.filter((lili) => {
@@ -46,10 +41,15 @@
 
 </script>
 
-<input placeholder="Filter LinkLinks..." class="input h-[40px] px-4 mx-4 mr-4 w-[440px]" bind:value={filter_value} autofocus/>
+<input placeholder="Filter LinkLinks..." class="input h-[40px] px-4 mx-4 mr-4 w-[440px] rounded" bind:value={filter_value} autofocus/>
 
 <div class="max-h-[440px] max-w-full overflow-y-scroll overflow-x-clip flex flex-col gap-2 w-full pl-4 pr-2">
 <!--    Note: always scrolling because of layout shift otherwise-->
+    {#if show_lilis.length === 0}
+        <div class="flex justify-center items-center h-14 w-full border border-gray-500 rounded">
+            <span class="text-white text-lg">No LinkLinks found</span>
+        </div>
+    {/if}
     {#each show_lilis as lili}
         <div class="flex max-h-14 min-h-14 rounded justify-between w-full h-full border border-gray-500"
             on:mouseenter={() => {
@@ -61,7 +61,7 @@
                 }
             }}
         >
-            <a class="flex flex-col w-full backdrop-blur-xl truncate h-full p-2 pt-1"
+            <a class="flex flex-col w-full backdrop-blur-xl truncate h-full p-2 pt-1 rounded"
                 href={`/lili/?id=${lili.id}`}
             >
                 <h1 class="text-base h-6 text-white" class:underline={hovering_id === lili.id}>{lili.name}</h1>

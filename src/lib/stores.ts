@@ -43,3 +43,5 @@ export const current_lili: Writable<LiliOutput | null> = localStorageStore('curr
 export const user_lilis: Writable<LiliOutput[]> = localStorageStore('user_lilis', []);
 
 export const current_tab: Writable<chrome.tabs.Tab | null> = writable(null);
+
+export const pinned_extension_page: Writable<string | null> = localStorageStore('pinned_extension_page', null);
