@@ -24,7 +24,9 @@
 </script>
 
 {#if lili !== undefined}
-<div class="max-h-[500px] max-w-full overflow-y-auto overflow-x-clip flex flex-col w-full gap-2 mx-3 pt-2 pr-2">
+<div class="max-h-[500px] min-w-[448px] max-w-[448px]
+    overflow-y-auto overflow-x-clip flex flex-col w-full gap-2 mx-3 pt-2 pl-1
+">
         <div class="p-2.5 gap-4 flex flex-col">
             <div class="flex justify-between items-center align-middle">
                 <button on:click={() => {

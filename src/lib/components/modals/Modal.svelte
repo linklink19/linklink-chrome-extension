@@ -14,7 +14,7 @@
     bind:this={dialog}
     on:close={() => {showModal = false}}
     on:click|self={() => dialog.close()}
-    class="variant-ringed hide-scrollbar modal text-white rounded-lg backdrop-blur shadow-xl border border-gray-400"
+    class=" hide-scrollbar modal text-white rounded-lg backdrop-blur shadow-xl border border-gray-400 card"
 >
     <!--    This if statement is here so that the component does not get mounted before it is supposed to.-->
     {#if showModal}
@@ -25,17 +25,16 @@
                     <slot name="header">
                         <div class="h-8 flex items-center pr-2">{title}</div>
                     </slot>
+                    <!-- X to close in top right-->
                     <button on:click={() => dialog.close()}
                             class="hover:scale-110 flex items-center -translate-y-1 -translate-x-1 sm:translate-x-0.5">
                         <i class="fas fa-circle-xmark text-xl" />
                     </button>
                 </div>
                 <hr />
-                <!-- X to close in top right-->
-                <div class="m-0 mt-2 sm:m-2">
+                <div class="m-0 mt-2 sm:m-2 mx-1.5">
                     <slot />
                 </div>
-                <!-- svelte-ignore a11y-autofocus -->
             </div>
         </div>
     {:else}
