@@ -4,15 +4,9 @@
 
 <div class="flex flex-col p-4 w-full h-full justify-center items-center align-middle">
     <p
-        class="tracking-normal text-4xl font-bold mb-8 mt-4 text-nowrap text-center"
+        class="tracking-normal text-4xl font-bold mb-4 mt-4 text-nowrap text-center"
     >
-        Share Bookmarks,
-        <br />
-        Find Links.
-    </p>
-    <p class="text-center py-4">
-        Linklink is a link management tool for organising and sharing links.
-        Log in below to get started
+        Login to start
     </p>
     <div class="flex gap-2 p-4 py-10">
         <a class="btn flex items-center gap-0 variant-filled-secondary hover:cursor-pointer h-10 rounded"
