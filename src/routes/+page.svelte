@@ -7,6 +7,7 @@
     import UserLilis from '$lib/components/UserLilis.svelte';
     import { refresh_user_lilis } from '$lib/api_helpers';
     import { goto } from '$app/navigation';
+    import Header from '$lib/components/Header.svelte';
 
     const check_login = async () => {
         // checks if logged in, tries refresh if not, sets account_info_store
@@ -52,6 +53,7 @@
 </script>
 
 {#if $account_info_store}
+    <Header />
     <div class="py-4 pt-2 flex flex-col gap-2 max-w-full">
         <UserLilis />
     </div>

@@ -9,4 +9,4 @@ export const load: PageLoad = ({  }) => {
         goto(pinned_page);
     }
 	return {};
-};
+}

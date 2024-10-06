@@ -8,4 +8,5 @@ export let refresh_user_lilis = async () => {
         limit: 100
     });
     user_lilis.set(new_user_lilis);
+    console.log('refreshed user lilis');
 };
