@@ -3,7 +3,6 @@
     import { Avatar } from '@skeletonlabs/skeleton';
     import { page } from '$app/stores';
     import NewLinkLinkModal from '$lib/components/modals/NewLinkLinkModal.svelte';
-    import SaveTabsModal from '$lib/components/modals/SaveTabsModal.svelte';
     import { WEBSITE_URL } from '$lib/constants';
 
     $: is_home = $page.url.pathname === '/' || $page.url.pathname === '/index.html';
@@ -18,11 +17,9 @@
     };
     let profile_options = false;
     let show_new_linklink = false;
-    let show_save_tabs = false;
 </script>
 
 <NewLinkLinkModal bind:show={show_new_linklink}/>
-<SaveTabsModal bind:show={show_save_tabs}/>
 
 <div class="flex justify-between items-center gap-2 h-full w-full px-2">
     {#if profile_options}
