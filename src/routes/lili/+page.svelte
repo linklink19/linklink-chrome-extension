@@ -45,8 +45,8 @@
                     <i class="fas fa-thumbtack text-lg hover:text-xl"
                        class:-rotate-45={!pinned}
                        class:text-gray-400={!pinned}
-                       class:text-yellow-400={pinned}
-                       class:hover:text-white={true}
+                       class:text-[#08FAF5]={pinned}
+                       class:hover:text-white={!pinned}
                     />
                 </button>
                 <button on:click={() => {

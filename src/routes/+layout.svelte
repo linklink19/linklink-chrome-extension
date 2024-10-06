@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import '../app.postcss';
-    import { fly } from 'svelte/transition'
     import ProfileComponent from '$lib/components/ProfileComponent.svelte';
     import Logo3 from '$lib/components/logo/logo3.svelte';
     import { WEBSITE_URL } from '$lib/constants';
@@ -13,6 +12,7 @@
     let unpin_extension_page = () => {
         $pinned_extension_page = null;
     }
+
 </script>
 
 
@@ -28,7 +28,8 @@
       <i class="fas fa-caret-left"></i>
       <span>Back</span>
     </a>
-    <button class="relative w-full h-10 flex items-center justify-items-center justify-center align-middle hover-glow"
+    <button class="relative w-full h-10 flex items-center justify-items-center justify-center align-middle
+      hover:scale-110 transition ease-in-out duration-300"
     on:click={() => {
       chrome.tabs.create({ url: `${WEBSITE_URL}` });
     }}

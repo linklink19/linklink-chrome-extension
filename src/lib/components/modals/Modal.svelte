@@ -27,7 +27,7 @@
                     </slot>
                     <!-- X to close in top right-->
                     <button on:click={() => dialog.close()}
-                            class="hover:scale-110 flex items-center -translate-y-1 -translate-x-1 sm:translate-x-0.5">
+                            class="hover:scale-110 transition ease-in-out duration-300 flex items-center -translate-y-1 -translate-x-1 sm:translate-x-0.5">
                         <i class="fas fa-circle-xmark text-xl" />
                     </button>
                 </div>

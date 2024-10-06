@@ -63,7 +63,7 @@
         <i class="w-8 p-1 fas fa-check-circle"></i>
         <span> Saved!</span>
     {:else}
-        <i class="w-8 p-1 text-yellow-500 fas fa-bookmark"></i>
+        <i class="w-8 p-1 text-[#08FAF5] fas fa-bookmark"></i>
         <span>
             Save
             {$client_settings.target_lili?.name ? `to ${$client_settings.target_lili.name}` : 'URL'}

@@ -11,6 +11,9 @@ importers:
       '@fortawesome/fontawesome-free':
         specifier: ^6.5.2
         version: 6.5.2
+      sv-tooltip:
+        specifier: ^0.2.1
+        version: 0.2.1
     devDependencies:
       '@skeletonlabs/skeleton':
         specifier: 2.9.1
@@ -1160,6 +1163,9 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  sv-tooltip@0.2.1:
+    resolution: {integrity: sha512-6I2N9yiLu6MQVnkeZS5DMr7lBK2rCCyu3+7/XgCd5qGNxHV75ctc9/inNTX8ID0Q6kRXUPDlB7l7pEuHNIXG4A==}
 
   svelte-check@3.6.9:
     resolution: {integrity: sha512-hDQrk3L0osX07djQyMiXocKysTLfusqi8AriNcCiQxhQR49/LonYolcUGMtZ0fbUR8HTR198Prrgf52WWU9wEg==}
@@ -2358,6 +2364,8 @@ snapshots:
       has-flag: 3.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  sv-tooltip@0.2.1: {}
 
   svelte-check@3.6.9(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.13):
     dependencies:

@@ -19,7 +19,7 @@
             href={`${WEBSITE_URL}/login`}
             target="_blank"
         >
-            <p>Get Started</p>
+            <p>Login</p>
             <i class="fas fa-chevron-right" />
         </a>
         <a
@@ -32,7 +32,7 @@
         </a>
     </div>
 
-    <p class="text-lg p-3 underline start-0">Extension features</p>
+    <h2 class="text-3xl p-3 font-bold start-0">Extension features</h2>
     <ul class="list-disc text-left text-xl">
         <li>Save links into LinkLinks</li>
         <li>Create new LinkLinks</li>
