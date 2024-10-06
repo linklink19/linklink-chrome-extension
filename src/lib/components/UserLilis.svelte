@@ -8,14 +8,14 @@
         (lili) => {
             return lili.name.toLowerCase().includes(filter_value.toLowerCase());
         }
-    ).sort(
-        (lili_a, lili_b) => {
-            // a less than b return -1
-            if (lili_a.edited_at < lili_b.edited_at) {
-                return -1;
-            }
-            else return 0;
-        }
+    // ).sort( // NOTE: server does this sort and js can't sort for shit
+    //     (lili_a, lili_b) => {
+    //         // a less than b return -1
+    //         if (lili_a.edited_at < lili_b.edited_at) {
+    //             return -1;
+    //         }
+    //         else return 0;
+    //     }
     ).sort(
         (lili_a, lili_b) => {
             let is_a_pinned = $pinned_lili_ids.includes(lili_a.id);

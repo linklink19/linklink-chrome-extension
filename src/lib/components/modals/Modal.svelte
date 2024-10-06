@@ -18,7 +18,7 @@
 >
     <!--    This if statement is here so that the component does not get mounted before it is supposed to.-->
     {#if showModal}
-        <div class="py-3 px-2 sm:px-6">
+        <div class="py-3 px-3 sm:px-6">
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div on:click|stopPropagation>
                 <div class="flex justify-between h-8 items-center">

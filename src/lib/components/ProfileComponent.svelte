@@ -1,7 +1,6 @@
 <script lang="ts">
     import { account_info_store } from '$lib/stores';
     import { Avatar } from '@skeletonlabs/skeleton';
-    import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import NewLinkLinkModal from '$lib/components/modals/NewLinkLinkModal.svelte';
     import SaveTabsModal from '$lib/components/modals/SaveTabsModal.svelte';
@@ -15,13 +14,6 @@
             return words[0].substring(0, 2);
         } else {
             return words[0].substring(0, 1) + words[1].substring(0, 1);
-        }
-    };
-    const plus_or_back = async () => {
-        if (is_home) {
-            await goto('/');
-        } else {
-            await goto('/newlist');
         }
     };
     let profile_options = false;
@@ -43,17 +35,11 @@
         </a>
     {:else}
     <div class="flex justify-between gap-2">
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 w-36"
                 on:click={() => {show_new_linklink = true;}}
         >
             <i class="fas fa-square-plus"></i>
             <span>New LinkLink</span>
-        </button>
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
-            on:click={() => {show_save_tabs = true;}}
-        >
-            <i class="fas fa-window-restore"></i>
-            <span>Save Tabs</span>
         </button>
     </div>
     {/if}
