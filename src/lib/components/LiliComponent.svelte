@@ -4,6 +4,7 @@
     import { WEBSITE_URL } from '$lib/constants';
     import { zero_uuid } from '$lib/uuid';
     import Tooltip from 'sv-tooltip';
+    import { add_all_tabs, add_link_to_lili, has_all_tabs } from '$lib/api_helpers';
 
     export let lili: LiliOutput;
     export let on_update = () => {};
@@ -13,36 +14,9 @@
         return lili.links.some((link) => link.url === $current_tab?.url) === true;
     }
 
-    function is_superset_array(array, subArray) {
-      for (let elem of subArray) {
-        if (!array.includes(elem)) {
-          return false; // If any element is not found, array is not a superset
-        }
-      }
-      return true; // All elements found, array is a superset
-    }
 
-    let has_all_tabs = (lili: LiliOutput) => {
-        let tab_urls = $current_tabs.map((tab) => tab.url);
-        let lili_urls = lili.links.map((link) => link.url);
-        return is_superset_array(lili_urls, tab_urls);
-    }
 
-    async function add_link_to_lili(links: Link[]) {
-        try {
-            let new_links = await LinkService.linkPost(
-                {
-                    liliId: lili.id,
-                    requestBody: links,
-                }
-            );
-            lili.links = [...new_links, ...lili.links]; // technically order is broken here.
-            lili.n_links = lili.links.length;
-            on_update();
-        } catch (e) {
-            alert("Error saving link");
-        }
-    }
+
     async function add_single_tab_to_lili() {
         await add_link_to_lili([
             {
@@ -53,20 +27,8 @@
                 name: $current_tab?.title ?? '',
                 description: '',
             }
-        ]);
-    }
-    async function add_all_tabs_to_lili() {
-        let links = $current_tabs.map((tab, idx) => {
-                return {
-                    id: zero_uuid,
-                    lili_id: zero_uuid,
-                    order_in_list: idx,
-                    url: tab.url ?? '',
-                    name: tab.title ?? '',
-                    description: "",
-                };
-            });
-        await add_link_to_lili(links);
+        ], lili);
+        on_update();
     }
     $: pinned = $pinned_lili_ids.includes(lili.id);
     let toggle_pin = async () => {
@@ -110,7 +72,7 @@
         {#if has_all_tabs(lili)}
             <Tooltip tip="Already added tabs" left>
             <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
-                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-check-double"></i>
             </div>
             </Tooltip>
         {:else}
@@ -118,11 +80,19 @@
                 <button class="
                     hover:variant-ghost-success min-h-full border-l-[1px]
                     border-gray-500 w-12 text-xl text-[#7DE95E] rounded-r
-                    relative
                 "
-                    on:click={add_all_tabs_to_lili}
+                    on:click={() => {
+                        add_all_tabs(lili);
+                        on_update();
+                    }}
                 >
-                    <i class="fas fa-angles-down "></i>
+                    <div class="rounded border p-0.5 w-8 h-8 place-self-center border-green-400 border-opacity-40 flex items-center justify-center">
+                    <div class="rounded border p-0.5 w-7 h-7 place-self-center border-green-400 border-opacity-50 flex items-center justify-center">
+                    <div class="rounded border p-0.5 w-6 h-6 place-self-center border-green-400 border-opacity-60 flex items-center justify-center">
+                    <i class="fas fa-square-plus w-5 h-5"/>
+                    </div>
+                    </div>
+                    </div>
                 </button>
             </Tooltip>
         {/if}
@@ -130,18 +100,18 @@
         {#if is_already_added(lili)}
             <Tooltip tip="Already added" left>
             <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
-                <i class="fa-regular fa-circle-check"></i>
+                <i class="fas fa-check"></i>
             </div>
             </Tooltip>
         {:else}
             <Tooltip tip="Add current tab" left>
                 <button class="
                     hover:variant-ghost-success min-h-full border-l-[1px]
-                    border-gray-500 w-12 text-xl text-[#7DE95E] rounded-r
+                    border-gray-500 w-12 text-xl text-[#7DE95E] rounded-r relative
                 "
                     on:click={add_single_tab_to_lili}
                 >
-                    <i class="fas fa-angle-down "></i>
+                    <i class="fas fa-square-plus "></i>
                 </button>
             </Tooltip>
         {/if}

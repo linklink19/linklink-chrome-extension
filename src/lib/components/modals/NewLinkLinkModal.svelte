@@ -1,10 +1,11 @@
 
 <script lang="ts">
-    import { LiliService } from '$lib/api/openapi';
+    import { LiliService, type Link } from '$lib/api/openapi';
     import { zero_uuid } from '$lib/uuid';
     import { refresh_user_lilis } from '$lib/api_helpers';
     import { catchEnter } from '$lib/components/catch_enter_directive';
     import Modal from '$lib/components/modals/Modal.svelte';
+    import { goto } from '$app/navigation';
 
     let linklink_title: string = "";
     let creating = false;
@@ -15,7 +16,7 @@
         }
         creating = true;
 
-        let links = [];
+        let links: Array<Link> = [];
         if (add_all_tabs) {
             let tabs = await chrome.tabs.query({ currentWindow: true });
             links = tabs.map((tab, idx) => {
@@ -31,7 +32,7 @@
         }
         try {
 
-            await LiliService.liliPost({ requestBody: {
+            let response = await LiliService.liliPost({ requestBody: {
                     id: zero_uuid,
                     name: linklink_title,
                     description: "",
@@ -40,16 +41,15 @@
                     unlisted: false
                 }
             });
+            await refresh_user_lilis();
+            await goto(`/lili/?id=${response.id}`);
         } catch (e) {
             alert("Error creating LinkLink");
         }
-        try {
-            await refresh_user_lilis();
-        } catch (e) {
-            alert("Error, try re-opening");
+        finally {
+            creating = false;
+            show = false;
         }
-        creating = false;
-        show = false;
     }
     let add_all_tabs = false;
 </script>

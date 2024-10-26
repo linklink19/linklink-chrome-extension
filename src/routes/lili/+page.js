@@ -16,9 +16,6 @@ export function load({ params, url }) {
 		return {lili: lili}
 	} catch (e2){
 		try {
-			console.log('nth');
-			console.log(e2);
-			console.log('ntth');
 		pinned_extension_page.set(null);
 
 		goto('/');

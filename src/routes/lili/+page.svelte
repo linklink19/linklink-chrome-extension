@@ -11,30 +11,21 @@
     import Tooltip from 'sv-tooltip';
     import DeleteLiliModal from '$lib/components/modals/DeleteLiliModal.svelte';
     import { zero_uuid } from '$lib/uuid';
+    import { add_all_tabs, has_all_tabs } from '$lib/api_helpers';
 
     export let data;
 
     let lili: LiliOutput = data.lili;
+    let pinned = $pinned_extension_page !== null;
 
     onMount(async () => {
+        $pinned_extension_page = `lili/?id=${lili.id}`;
         if (lili === undefined && lili.id !== undefined) {
             lili = await LiliService.liliIdGet({ id: lili.id ?? '' });
         } else if (lili.id === undefined) {
             goto('/')
         };
     });
-
-    let pinned = $pinned_extension_page !== null;
-    let toggle_pin = async () => {
-        if (lili !== undefined) {
-            pinned = !pinned;
-            if (pinned) {
-                pinned_extension_page.set(`lili/?id=${lili.id}`);
-            } else {
-                pinned_extension_page.set(null);
-            }
-        }
-    };
 
     let toggle_bookmark = async () => {
         try {
@@ -89,7 +80,7 @@
     ">
         <div class="p-2.5 gap-4 grid grid-cols-6">
             <Tooltip tip="Back" bottom>
-                <a class="sqbtntop group text-3xl hover:text-4xl"
+                <a class="sqbtntop group text-3xl hover:text-4xl hover:text-[#08FAF5]"
                  class:invisible={'/index.html' === $page.url.pathname || '/' === $page.url.pathname}
                  href="/"
                    on:click={() => {$pinned_extension_page = null;}}
@@ -113,32 +104,44 @@
             </Tooltip>
             <Tooltip tip="Open LinkLink as tabs" bottom>
                 <button on:click={open_links_as_tabs} class="sqbtntop group">
-                    <i class={`fas fa-window-restore group-hover:text-2xl group-hover:text-[#08FAF5]`} />
+                    <i class={`fa-regular fa-share-from-square group-hover:text-2xl group-hover:text-[#08FAF5]`} />
                 </button>
             </Tooltip>
+            {#if has_all_tabs(lili)}
+                    <Tooltip tip="Already added tabs" bottom>
+                    <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                    </Tooltip>
+                {:else}
+                    <Tooltip tip="Add all tabs" bottom>
+                        <button class="sqbtntop group hover:text-[#08FAF5]"
+                            on:click={() => {
+                                add_all_tabs(lili);
+                            }}
+                        >
+                            <div class="group-hover:scale-110
+                                        rounded border p-0.5 w-8 h-8 place-self-center border-opacity-40 flex items-center justify-center">
+<!--                            <div class="rounded border p-0.5 w-7 h-7 place-self-center border-opacity-50 flex items-center justify-center">-->
+                            <div class="rounded border p-0.5 w-6 h-6 place-self-center border-opacity-60 flex items-center justify-center">
+                            <i class="fas fa-square-plus w-5 h-5"/>
+                            </div>
+                            </div>
+<!--                            </div>-->
+                        </button>
+                    </Tooltip>
+                {/if}
+
             {#if !is_already_added}
-            <Tooltip tip="Add current tab" bottom>
-                <button on:click={add_link_to_lili} class="sqbtntop group">
-                    <i class={`fas fa-angle-down group-hover:text-2xl group-hover:text-[#08FAF5]`} />
-                </button>
-            </Tooltip>
-            {:else}
-            <Tooltip tip="Already added" bottom>
-                <button class="sqbtntop group" disabled>
-                    <i class="fas fa-check text-[#7DE95E]" />
-                </button>
-            </Tooltip>
-            {/if}
-            {#if !pinned}
-                <Tooltip tip='Pin' bottom>
-                    <button on:click={toggle_pin} class="sqbtntop group place-self-end">
-                        <i class="fas fa-thumbtack group-hover:text-2xl group-hover:text-white -rotate-45 text-gray-400"/>
+                <Tooltip tip="Add current tab" bottom>
+                    <button on:click={add_link_to_lili} class="sqbtntop group">
+                        <i class={`fas fa-square-plus group-hover:text-2xl group-hover:text-[#08FAF5]`} />
                     </button>
                 </Tooltip>
             {:else}
-                <Tooltip tip='Unpin' bottom>
-                    <button on:click={toggle_pin} class="sqbtntop group place-self-end">
-                        <i class="fas fa-thumbtack group-hover:text-2xl  text-[#08FAF5]"/>
+                <Tooltip tip="Already added" bottom>
+                    <button class="sqbtntop group" disabled>
+                        <i class="fas fa-check text-[#7DE95E]" />
                     </button>
                 </Tooltip>
             {/if}
