@@ -1,9 +1,17 @@
 <script lang="ts">
-    import { account_info_store } from '$lib/stores';
+    import {
+        account_info_store,
+        auth_status, AuthStatus,
+        current_lili,
+        pinned_extension_page,
+        pinned_lili_ids,
+        user_lilis
+    } from '$lib/stores';
     import { Avatar } from '@skeletonlabs/skeleton';
     import { page } from '$app/stores';
     import NewLinkLinkModal from '$lib/components/modals/NewLinkLinkModal.svelte';
     import { WEBSITE_URL } from '$lib/constants';
+    import { tick } from 'svelte';
 
     $: is_home = $page.url.pathname === '/' || $page.url.pathname === '/index.html';
 
@@ -17,6 +25,17 @@
     };
     let profile_options = false;
     let show_new_linklink = false;
+    const logout = () => {
+        pinned_extension_page.set(null);
+        auth_status.set(AuthStatus.logged_out);
+        current_lili.set(null);
+        user_lilis.set([]);
+        tick();
+        tick();
+        tick();
+
+        chrome.tabs.create({ url: `${WEBSITE_URL}/logout` });
+    }
 </script>
 
 <NewLinkLinkModal bind:show={show_new_linklink}/>
@@ -29,13 +48,12 @@
         <span>New LinkLink</span>
     </button>
     <div class="flex gap-2 items-center">
-        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 h-10"
-            href={`${WEBSITE_URL}/logout`}
-            target="_blank"
+        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 h-10"
+            on:click={logout}
         >
             <i class="fas fa-right-from-bracket"></i>
             Sign Out
-        </a>
+        </button>
         <Avatar
             src={$account_info_store?.profile_picture_url ?? ''}
             initials={get_initials($account_info_store?.name ?? '')}
