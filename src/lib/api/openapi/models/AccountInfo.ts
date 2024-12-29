@@ -7,5 +7,7 @@ export type AccountInfo = {
     name: string;
     username: string;
     profile_picture_url?: (string | null);
+    categorisation_credits: number;
+    purchased_categorisation_early_bird: boolean;
 };
 

@@ -22,31 +22,28 @@
 <NewLinkLinkModal bind:show={show_new_linklink}/>
 
 <div class="flex justify-between items-center gap-2 h-full w-full px-2">
-    {#if profile_options}
-        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1"
+    <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 w-36 h-10"
+            on:click={() => {show_new_linklink = true;}}
+    >
+        <i class="fas fa-square-plus"></i>
+        <span>New LinkLink</span>
+    </button>
+    <div class="flex gap-2 items-center">
+        <a class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 h-10"
             href={`${WEBSITE_URL}/logout`}
             target="_blank"
         >
             <i class="fas fa-right-from-bracket"></i>
             Sign Out
         </a>
-    {:else}
-    <div class="flex justify-between gap-2">
-        <button class="btn variant-ringed hover:variant-ringed-primary rounded text-sm gap-1 w-36"
-                on:click={() => {show_new_linklink = true;}}
-        >
-            <i class="fas fa-square-plus"></i>
-            <span>New LinkLink</span>
-        </button>
+        <Avatar
+            src={$account_info_store?.profile_picture_url ?? ''}
+            initials={get_initials($account_info_store?.name ?? '')}
+            width="w-11"
+            border="border-4 border-surface-300-600-token hover:!border-primary-500"
+            cursor="cursor-pointer"
+            on:click={() => {profile_options = !profile_options}}
+        />
     </div>
-    {/if}
-    <Avatar
-        src={$account_info_store?.profile_picture_url ?? ''}
-        initials={get_initials($account_info_store?.name ?? '')}
-        width="w-11"
-        border="border-4 border-surface-300-600-token hover:!border-primary-500"
-        cursor="cursor-pointer"
-        on:click={() => {profile_options = !profile_options}}
-    />
 
 </div>

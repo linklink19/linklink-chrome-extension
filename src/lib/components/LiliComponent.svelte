@@ -1,21 +1,17 @@
 <script lang="ts">
-    import { current_tab, current_tabs, pinned_lili_ids } from '$lib/stores';
-    import { type LiliOutput, type Link, LinkService } from '$lib/api/openapi';
+    import { current_tab, pinned_lili_ids } from '$lib/stores';
+    import { type LiliOutput } from '$lib/api/openapi';
     import { WEBSITE_URL } from '$lib/constants';
     import { zero_uuid } from '$lib/uuid';
     import Tooltip from 'sv-tooltip';
-    import { add_all_tabs, add_link_to_lili, has_all_tabs } from '$lib/api_helpers';
+    import { add_link_to_lili } from '$lib/api_helpers';
 
     export let lili: LiliOutput;
     export let on_update = () => {};
 
-
     let is_already_added = (lili: LiliOutput) => {
         return lili.links.some((link) => link.url === $current_tab?.url) === true;
     }
-
-
-
 
     async function add_single_tab_to_lili() {
         await add_link_to_lili([
@@ -69,33 +65,6 @@
         <button on:click={() => {
             chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili.id}` });
         }} class="fas fa-up-right-from-square sqbtn-left text-lg"> </button>
-        {#if has_all_tabs(lili)}
-            <Tooltip tip="Already added tabs" left>
-            <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
-                <i class="fa-solid fa-check-double"></i>
-            </div>
-            </Tooltip>
-        {:else}
-            <Tooltip tip="Add all tabs" left>
-                <button class="
-                    hover:variant-ghost-success min-h-full border-l-[1px]
-                    border-gray-500 w-12 text-xl text-[#7DE95E] rounded-r
-                "
-                    on:click={() => {
-                        add_all_tabs(lili);
-                        on_update();
-                    }}
-                >
-                    <div class="rounded border p-0.5 w-8 h-8 place-self-center border-green-400 border-opacity-40 flex items-center justify-center">
-                    <div class="rounded border p-0.5 w-7 h-7 place-self-center border-green-400 border-opacity-50 flex items-center justify-center">
-                    <div class="rounded border p-0.5 w-6 h-6 place-self-center border-green-400 border-opacity-60 flex items-center justify-center">
-                    <i class="fas fa-square-plus w-5 h-5"/>
-                    </div>
-                    </div>
-                    </div>
-                </button>
-            </Tooltip>
-        {/if}
 
         {#if is_already_added(lili)}
             <Tooltip tip="Already added" left>

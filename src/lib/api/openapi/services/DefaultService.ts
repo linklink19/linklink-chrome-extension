@@ -30,6 +30,17 @@ export class DefaultService {
         });
     }
     /**
+     * Healthcheck
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static healthcheckGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/healthcheck',
+        });
+    }
+    /**
      * Debug
      * @returns any Successful Response
      * @throws ApiError

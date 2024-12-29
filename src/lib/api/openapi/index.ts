@@ -23,6 +23,7 @@ export type { ValidationError } from './models/ValidationError';
 export { AccessHistoryService } from './services/AccessHistoryService';
 export { AccountService } from './services/AccountService';
 export { AdminService } from './services/AdminService';
+export { AiService } from './services/AiService';
 export { AuthService } from './services/AuthService';
 export { BookmarkService } from './services/BookmarkService';
 export { DefaultService } from './services/DefaultService';

@@ -88,6 +88,16 @@
                     <i class="fas fa-caret-left"></i>
                 </a>
             </Tooltip>
+            <Tooltip tip="Delete LinkLink" bottom>
+                <button on:click={() => {show_delete_modal = true}} class="sqbtntop group">
+                    <i class={`fas fa-trash group-hover:text-2xl group-hover:text-red-500`} />
+                </button>
+            </Tooltip>
+            <Tooltip tip="Open LinkLink As Tabs" bottom>
+                <button on:click={open_links_as_tabs} class="sqbtntop group">
+                    <i class={`fa-regular fa-share-from-square group-hover:text-2xl group-hover:text-[#08FAF5]`} />
+                </button>
+            </Tooltip>
             <Tooltip tip="Toggle Bookmark" bottom>
                 <button on:click={toggle_bookmark} class="sqbtntop group">
                     {#if lili.bookmarked}
@@ -97,66 +107,51 @@
                     {/if}
                 </button>
             </Tooltip>
-            <Tooltip tip="Delete LinkLink" bottom>
-                <button on:click={() => {show_delete_modal = true}} class="sqbtntop group">
-                    <i class={`fas fa-trash group-hover:text-2xl group-hover:text-red-500`} />
-                </button>
-            </Tooltip>
-            <Tooltip tip="Open LinkLink as tabs" bottom>
-                <button on:click={open_links_as_tabs} class="sqbtntop group">
-                    <i class={`fa-regular fa-share-from-square group-hover:text-2xl group-hover:text-[#08FAF5]`} />
-                </button>
-            </Tooltip>
             {#if has_all_tabs(lili)}
-                    <Tooltip tip="Already added tabs" bottom>
+                    <Tooltip tip="Already Added Tabs" bottom>
                     <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
                         <i class="fa-solid fa-check-double"></i>
                     </div>
                     </Tooltip>
                 {:else}
-                    <Tooltip tip="Add all tabs" bottom>
+                    <Tooltip tip="Add All Tabs" bottom>
                         <button class="sqbtntop group hover:text-[#08FAF5]"
                             on:click={() => {
                                 add_all_tabs(lili);
                             }}
                         >
-                            <div class="group-hover:scale-110
-                                        rounded border p-0.5 w-8 h-8 place-self-center border-opacity-40 flex items-center justify-center">
-<!--                            <div class="rounded border p-0.5 w-7 h-7 place-self-center border-opacity-50 flex items-center justify-center">-->
-                            <div class="rounded border p-0.5 w-6 h-6 place-self-center border-opacity-60 flex items-center justify-center">
-                            <i class="fas fa-square-plus w-5 h-5"/>
-                            </div>
-                            </div>
-<!--                            </div>-->
+                            <i class="fas fa-list-check w-5 h-5"/>
                         </button>
                     </Tooltip>
                 {/if}
 
             {#if !is_already_added}
-                <Tooltip tip="Add current tab" bottom>
+                <Tooltip tip="Add Current Tab" bottom>
                     <button on:click={add_link_to_lili} class="sqbtntop group">
                         <i class={`fas fa-square-plus group-hover:text-2xl group-hover:text-[#08FAF5]`} />
                     </button>
                 </Tooltip>
             {:else}
-                <Tooltip tip="Already added" bottom>
+                <Tooltip tip="Already Added" bottom>
                     <button class="sqbtntop group" disabled>
                         <i class="fas fa-check text-[#7DE95E]" />
                     </button>
                 </Tooltip>
             {/if}
         </div>
-        <div class="p-2.5 gap-4 flex align-middle justify-center group relative">
+        <div class="gap-4 flex align-middle justify-center group relative rounded-lg">
                 <button on:click={() => {chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili?.id}` });}}
-                    class="relative flex-1 mx-2 text-center overflow-hidden">
-                    <h1 class="block whitespace-nowrap overflow-hidden text-ellipsis group-hover:underline text-auto h-6"
+                    class="relative flex-1 mx-2 text-center overflow-hidden
+                           border border-transparent hover:border-white
+                           p-2.5 rounded-lg">
+                    <div class="block whitespace-nowrap overflow-hidden text-ellipsis group-hover:underline
+                                justify-items-center content-center text-3xl"
                         title={lili.name}>
-                        <i class="fas fa-up-right-from-square text-xl pr-2 group-hover:scale-110"></i>
-                        {lili.name}
-                    </h1>
+                        <span>{lili.name}</span>
+                        <i class="fas fa-up-right-from-square text-xl pr-3 group-hover:scale-110 -translate-y-1" />
+                    </div>
                 </button>
             <span class="absolute -bottom-6 card group-hover:block hidden p-1 rounded text-xs">linklink.ink/lili/{lili.id}</span>
-
         </div>
         {#if lili.description !== ''}
             <div class="px-2 text-center font-light text-sm py-2">
@@ -165,7 +160,11 @@
         {/if}
         <div class="gap-2 flex flex-col overflow-x-clip p-2.5 pr-3">
             {#each lili.links as link}
-                <LinkComponent {link} />
+                {#if link.is_section}
+                    <h1 class="pt-4 pb-2">{link.name}</h1>
+                {:else}
+                    <LinkComponent {link} />
+                {/if}
             {/each}
         </div>
     </div>

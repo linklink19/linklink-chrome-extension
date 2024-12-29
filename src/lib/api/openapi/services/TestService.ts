@@ -50,4 +50,42 @@ export class TestService {
             url: '/test/not-found',
         });
     }
+    /**
+     * Set Cookie
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static testSetCookiePost({
+        customStr,
+        secure = true,
+        httponly = true,
+    }: {
+        customStr?: (string | null),
+        secure?: boolean,
+        httponly?: boolean,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/set-cookie',
+            query: {
+                'custom_str': customStr,
+                'secure': secure,
+                'httponly': httponly,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Cookie
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static testGetCookieGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/test/get-cookie',
+        });
+    }
 }

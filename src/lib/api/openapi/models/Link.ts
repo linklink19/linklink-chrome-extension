@@ -6,8 +6,9 @@ export type Link = {
     id: string;
     lili_id: string;
     order_in_list: number;
-    url: string;
+    url: (string | null);
     name: string;
     description: string;
+    is_section?: boolean;
 };
 
