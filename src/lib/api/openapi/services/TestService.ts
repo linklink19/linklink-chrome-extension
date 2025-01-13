@@ -88,4 +88,16 @@ export class TestService {
             url: '/test/get-cookie',
         });
     }
+    /**
+     * Ping
+     * Return the full request with headers and everything
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static testPingGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/test/ping',
+        });
+    }
 }

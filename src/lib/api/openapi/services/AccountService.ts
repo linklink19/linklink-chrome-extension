@@ -3,6 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AccountInfo } from '../models/AccountInfo';
+import type { AccountUpdate } from '../models/AccountUpdate';
+import type { TransferTarget } from '../models/TransferTarget';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -39,7 +41,7 @@ export class AccountService {
         requestBody,
         authToken,
     }: {
-        requestBody: AccountInfo,
+        requestBody: AccountUpdate,
         authToken?: (string | null),
     }): CancelablePromise<AccountInfo> {
         return __request(OpenAPI, {
@@ -71,6 +73,55 @@ export class AccountService {
             url: '/account/delete',
             cookies: {
                 'auth_token': authToken,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     *  Transfer Target
+     * Get the target account for transfer.
+     * @returns TransferTarget Successful Response
+     * @throws ApiError
+     */
+    public static accountTransferTargetGet({
+        authToken,
+    }: {
+        authToken?: (string | null),
+    }): CancelablePromise<TransferTarget> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/account/transfer-target',
+            cookies: {
+                'auth_token': authToken,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     *  Transfer
+     * Transfer current account TO other account, only works when emails are the same.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static accountTransferGet({
+        otherAccountId,
+        authToken,
+    }: {
+        otherAccountId: string,
+        authToken?: (string | null),
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/account/transfer',
+            cookies: {
+                'auth_token': authToken,
+            },
+            query: {
+                'other_account_id': otherAccountId,
             },
             errors: {
                 422: `Validation Error`,

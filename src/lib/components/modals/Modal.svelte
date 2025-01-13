@@ -32,7 +32,7 @@
                     </button>
                 </div>
                 <hr />
-                <div class="m-0 mt-2 sm:m-2 mx-1.5">
+                <div class="">
                     <slot />
                 </div>
             </div>

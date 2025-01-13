@@ -75,9 +75,7 @@
 <!--{#if lili !== undefined} Because of prerender bullshit-->
 {#if lili !== undefined}
     <DeleteLiliModal bind:show={show_delete_modal} lili={lili}/>
-    <div class="max-h-[530px] min-w-[468px] max-w-[468px]
-        overflow-y-auto flex flex-col w-full gap-2 mx-3 pt-2 pl-1 text-xl
-    ">
+    <div class="flex flex-col gap-2 overflow-y-auto max-h-[530px] overflow-x-hidden">
         <div class="p-2.5 gap-4 grid grid-cols-6">
             <Tooltip tip="Back" bottom>
                 <a class="sqbtntop group text-3xl hover:text-4xl hover:text-[#08FAF5]"
@@ -141,7 +139,7 @@
         </div>
         <div class="gap-4 flex align-middle justify-center group relative rounded-lg">
                 <button on:click={() => {chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili?.id}` });}}
-                    class="relative flex-1 mx-2 text-center overflow-hidden
+                    class="relative flex-1 text-center overflow-hidden
                            border border-transparent hover:border-white
                            p-2.5 rounded-lg">
                     <div class="block whitespace-nowrap overflow-hidden text-ellipsis group-hover:underline

@@ -31,8 +31,8 @@
     );
 </script>
 
-<div class="h-[40px] w-[455px] relative">
-    <input placeholder="Filter LinkLinks..." class="input mx-4 rounded" bind:value={filter_value} autofocus/>
+<div class="h-[40px] w-full relative px-4">
+    <input placeholder="Filter LinkLinks..." class="input rounded w-full" bind:value={filter_value} autofocus/>
     <button on:click={() => {filter_value = ""}} class="fas fa-circle-xmark text-lg absolute -right-0 top-1.5 hover:text-red-300 hover:scale-110"
         class:hidden={filter_value === ""}
     />

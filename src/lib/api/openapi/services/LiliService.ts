@@ -41,7 +41,7 @@ export class LiliService {
      * @throws ApiError
      */
     public static liliGet({
-        includePrivate = true,
+        includePrivate = false,
         includeNonUserPublic = true,
         bookmarkedOnly = false,
         limit = 9,

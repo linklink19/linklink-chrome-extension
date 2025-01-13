@@ -54,7 +54,7 @@
 
 {#if $account_info_store}
     <Header />
-    <div class="py-4 pt-2 flex flex-col gap-2 max-w-full">
+    <div class="py-4 pt-2 flex flex-col gap-2 w-full">
         <UserLilis />
     </div>
 {:else}

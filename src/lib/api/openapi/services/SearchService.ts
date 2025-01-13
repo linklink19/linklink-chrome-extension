@@ -17,10 +17,14 @@ export class SearchService {
     public static searchGet({
         searchTerm = '',
         userOnly = false,
+        orderBy = 'combined_similarity',
+        orderByDirection = 'DESC',
         authToken,
     }: {
         searchTerm?: string,
         userOnly?: boolean,
+        orderBy?: 'combined_similarity' | 'edited_at' | 'n_bookmarks' | 'n_links',
+        orderByDirection?: 'ASC' | 'DESC',
         authToken?: (string | null),
     }): CancelablePromise<Array<LiliOutput>> {
         return __request(OpenAPI, {
@@ -32,6 +36,8 @@ export class SearchService {
             query: {
                 'search_term': searchTerm,
                 'user_only': userOnly,
+                'order_by': orderBy,
+                'order_by_direction': orderByDirection,
             },
             errors: {
                 422: `Validation Error`,
