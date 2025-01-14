@@ -42,7 +42,8 @@
                 }
             });
             await refresh_user_lilis();
-            await goto(`/lili/?id=${response.id}`, { replaceState: true, invalidateAll: true });
+            chrome.tabs.create({ url: `https://linklink.ink/lili/${response.id}` });
+            // await goto(`/lili/?id=${response.id}`, { replaceState: true, invalidateAll: true });
         } catch (e) {
             alert("Error creating LinkLink");
         }
