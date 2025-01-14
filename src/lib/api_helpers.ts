@@ -29,19 +29,17 @@ export async function add_link_to_lili(links: Link[], lili: LiliOutput) {
     }
 }
 export let add_all_tabs = async (lili: LiliOutput) => {
-        async function add_all_tabs_to_lili() {
-        let links = get(current_tabs).map((tab, idx) => {
-                return {
-                    id: zero_uuid,
-                    lili_id: zero_uuid,
-                    order_in_list: idx,
-                    url: tab.url ?? '',
-                    name: tab.title ?? '',
-                    description: "",
-                };
-            });
-        await add_link_to_lili(links, lili);
-    }
+    let links = get(current_tabs).map((tab, idx) => {
+            return {
+                id: zero_uuid,
+                lili_id: zero_uuid,
+                order_in_list: idx,
+                url: tab.url ?? '',
+                name: tab.title ?? '',
+                description: "",
+            };
+        });
+    await add_link_to_lili(links, lili);
 }
 
 function is_superset_array(array: Array<any>, subArray: Array<any>) {

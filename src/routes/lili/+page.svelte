@@ -39,7 +39,7 @@
     let show_delete_modal = false;
 
     let open_links_as_tabs = async () => {
-        let urls = lili.links.map((link) => link.url);
+        let urls = lili.links.filter((link) => !link.is_section).map((link) => link.url);
         chrome.windows.create({ url: urls }, function(window) {
             console.log('New window created with 5 tabs:', window);
         });
@@ -107,9 +107,9 @@
             </Tooltip>
             {#if has_all_tabs(lili)}
                     <Tooltip tip="Already Added Tabs" bottom>
-                    <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
-                        <i class="fa-solid fa-check-double"></i>
-                    </div>
+                        <button class="sqbtntop group text-[#7DE95E]" disabled>
+                            <i class="fas fa-check-double w-5 h-5"/>
+                        </button>
                     </Tooltip>
                 {:else}
                     <Tooltip tip="Add All Tabs" bottom>
@@ -137,7 +137,7 @@
                 </Tooltip>
             {/if}
         </div>
-        <div class="gap-4 flex align-middle justify-center group relative rounded-lg">
+        <div class="gap-4 flex align-middle justify-center group relative rounded px-2">
                 <button on:click={() => {chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili?.id}` });}}
                     class="relative flex-1 text-center overflow-hidden
                            border border-transparent hover:border-white
