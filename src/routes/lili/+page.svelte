@@ -20,10 +20,10 @@
 
     onMount(async () => {
         $pinned_extension_page = `lili/?id=${lili.id}`;
-        if (lili === undefined && lili.id !== undefined) {
+        if (lili.id !== undefined) {
             lili = await LiliService.liliIdGet({ id: lili.id ?? '' });
         } else if (lili.id === undefined) {
-            goto('/')
+            goto('/');
         };
     });
 
@@ -114,8 +114,9 @@
                 {:else}
                     <Tooltip tip="Add All Tabs" bottom>
                         <button class="sqbtntop group hover:text-[#08FAF5]"
-                            on:click={() => {
-                                add_all_tabs(lili);
+                            on:click={async () => {
+                                await add_all_tabs(lili);
+                                lili = lili;
                             }}
                         >
                             <i class="fas fa-list-check w-5 h-5"/>

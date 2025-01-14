@@ -27,6 +27,7 @@ export async function add_link_to_lili(links: Link[], lili: LiliOutput) {
     } catch (e) {
         alert("Error saving link");
     }
+    await refresh_user_lilis();
 }
 export let add_all_tabs = async (lili: LiliOutput) => {
     let links = get(current_tabs).map((tab, idx) => {

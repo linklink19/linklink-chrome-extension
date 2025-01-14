@@ -9,9 +9,10 @@
     export let lili: LiliOutput;
     export let on_update = () => {};
 
-    let is_already_added = (lili: LiliOutput) => {
+    let _is_already_added = (lili: LiliOutput) => {
         return lili.links.some((link) => link.url === $current_tab?.url) === true;
     }
+    let is_already_added = _is_already_added(lili);
 
     async function add_single_tab_to_lili() {
         await add_link_to_lili([
@@ -24,6 +25,7 @@
                 description: '',
             }
         ], lili);
+        is_already_added = _is_already_added(lili);
         on_update();
     }
     $: pinned = $pinned_lili_ids.includes(lili.id);
@@ -66,7 +68,7 @@
             chrome.tabs.create({ url: `${WEBSITE_URL}/lili/${lili.id}` });
         }} class="fas fa-up-right-from-square sqbtn-left text-lg"> </button>
 
-        {#if is_already_added(lili)}
+        {#if is_already_added}
             <Tooltip tip="Already added" left>
             <div class="flex items-center justify-center align-center sqbtn-left text-green-500 text-xl" disabled>
                 <i class="fas fa-check"></i>

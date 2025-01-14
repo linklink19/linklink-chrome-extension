@@ -6,7 +6,6 @@
     import { catchEnter } from '$lib/components/catch_enter_directive';
     import Modal from '$lib/components/modals/Modal.svelte';
     import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
 
     let linklink_title: string = "New LinkLink";
     let creating = false;
@@ -43,7 +42,7 @@
                 }
             });
             await refresh_user_lilis();
-            await goto(`/lili/?id=${response.id}`);
+            await goto(`/lili/?id=${response.id}`, { replaceState: true, invalidateAll: true });
         } catch (e) {
             alert("Error creating LinkLink");
         }
