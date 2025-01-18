@@ -16,15 +16,13 @@
     export let data;
 
     let lili: LiliOutput = data.lili;
-    let pinned = $pinned_extension_page !== null;
 
     onMount(async () => {
-        $pinned_extension_page = `lili/?id=${lili.id}`;
-        if (lili.id !== undefined) {
-            lili = await LiliService.liliIdGet({ id: lili.id ?? '' });
-        } else if (lili.id === undefined) {
+        if (lili === undefined || lili.id === undefined) {
             goto('/');
         };
+        $pinned_extension_page = `lili/?id=${lili.id}`;
+        lili = await LiliService.liliIdGet({ id: lili.id }); // refresh
     });
 
     let toggle_bookmark = async () => {
@@ -75,8 +73,8 @@
 <!--{#if lili !== undefined} Because of prerender bullshit-->
 {#if lili !== undefined}
     <DeleteLiliModal bind:show={show_delete_modal} lili={lili}/>
-    <div class="flex flex-col gap-2 overflow-y-auto max-h-[530px] overflow-x-hidden">
-        <div class="p-2.5 gap-4 grid grid-cols-6">
+    <div class="flex flex-col gap-2 overflow-y-auto max-h-[555px] overflow-x-hidden pl-4 pr-2">
+        <div class="py-2.5 gap-4 grid grid-cols-6">
             <Tooltip tip="Back" bottom>
                 <a class="sqbtntop group text-3xl hover:text-4xl hover:text-[#08FAF5]"
                  class:invisible={'/index.html' === $page.url.pathname || '/' === $page.url.pathname}
@@ -157,7 +155,7 @@
                 <span>{lili.description}</span>
             </div>
         {/if}
-        <div class="gap-2 flex flex-col overflow-x-clip p-2.5 pr-3">
+        <div class="gap-2 flex flex-col overflow-x-clip py-2.5">
             {#each lili.links as link}
                 {#if link.is_section}
                     <h1 class="pt-4 pb-2">{link.name}</h1>
